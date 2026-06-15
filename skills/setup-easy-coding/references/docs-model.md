@@ -23,7 +23,9 @@ source-repo/
     batch/
 ```
 
-Always record the chosen workspace root, source git root, and docs root in `current-work.md`.
+These names are defaults. If the project already has authoritative roadmap or current-status files named by its agent instructions or docs index, reuse those files by default and record the mapping there.
+
+Always record the chosen workspace root, source git root, docs root, roadmap file, current-work/status file, and batch root in the chosen current-work/status document.
 
 ## `docs/easy-roadmap.md`
 

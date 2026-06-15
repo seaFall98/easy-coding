@@ -10,6 +10,7 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 - `finish` assumes a GitHub PR workflow and should document alternatives for projects without GitHub.
 - `setup-easy-coding` should be tested on both a new repo and an existing repo with legacy roadmap/status docs.
 - `to-roadmap` should be tested on both new-project vision input and existing-roadmap migration input.
+- The first real adoption should verify that existing project-specific roadmap/status files are reused by default instead of creating duplicate `easy-roadmap.md` / `current-work.md` files.
 
 ## Packaging Gaps
 
@@ -21,5 +22,6 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 
 - `npx skills add seaFall98/easy-coding --list` detects the 7 default core easy-coding skills from GitHub.
 - `npx skills add mattpocock/skills --list` detects the upstream Matt Pocock skills dependency.
+- Subagent packaging review found no stale `goal-plan-decomposer` or `finish-feature-dev` references after the rename.
 - No fresh-agent forward test has been run against `$easy-coding` yet.
 - No ZBlog P4 dry run has been completed with the full setup -> grill -> spec -> goal-plan path.

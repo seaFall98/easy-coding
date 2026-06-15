@@ -12,6 +12,13 @@ Default installation includes only easy-coding core skills. A local Matt Pocock 
 
 ## Install
 
+Prerequisites:
+
+- `npx skills` available in your agent environment
+- Matt Pocock skills installed separately
+- `git` for branch workflows
+- authenticated `gh` CLI when using `$finish` with GitHub PRs
+
 Install Matt Pocock skills first, then install easy-coding core skills:
 
 ```bash

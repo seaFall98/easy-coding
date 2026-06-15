@@ -88,11 +88,13 @@ Ask before deleting the remote branch.
 
 ### 8. Sync docs
 
-Use the repository's documentation model. If the project uses easy-coding docs, update:
+Use the repository's documentation model. If the project uses easy-coding default docs, update:
 
 - `docs/easy-roadmap.md`
 - `docs/current-work.md`
 - active `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`
+
+If the project adopted easy-coding with project-specific roadmap/status names, update the mapped files instead of creating duplicate defaults.
 
 Otherwise, look for agent instructions, docs indexes, roadmaps, status files, ADRs, and context files. Update only existing relevant docs unless the owner asked to create a new doc.
 

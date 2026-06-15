@@ -189,7 +189,7 @@ Never mark complete from:
 
 Record explicit human gates for:
 - unresolved product decisions
-- non-trivial public UI change
+- non-trivial public UI change, especially when project instructions require explicit approval for layout, copy, visual hierarchy, or interaction deltas
 - destructive migration or delete
 - external service, cost, or config
 - push, PR, merge, deploy

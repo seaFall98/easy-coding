@@ -20,6 +20,7 @@ Use these sources, in this order:
 4. explicit assumptions marked as assumptions
 
 Never write an unconfirmed guess as a fact.
+Before drafting user-facing UI scope, read project agent instructions. If the project requires approval for public UI, layout, copy, or interaction changes, list each approved UI delta explicitly; otherwise specify that current UI is preserved and only real data or behavior is wired.
 
 If grill results are still missing a blocking decision, ask the smallest blocking question and stop.
 

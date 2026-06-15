@@ -23,13 +23,14 @@ Initialize a project so `$easy-coding` knows where source code lives, where work
    - existing roadmap/current status files
 4. Check whether Matt Pocock skills are installed. If missing, stop and tell the owner to install them; do not create duplicate local copies.
 5. Route to `setup-matt-pocock-skills` if the project has not already configured issue tracker, triage labels, and domain docs.
-6. Create missing easy-coding docs:
+6. Create missing easy-coding docs only when no authoritative project-specific equivalents exist:
    - `docs/easy-roadmap.md`
    - `docs/current-work.md`
    - `docs/batch/`
-7. Do not migrate old docs unless the user explicitly asks.
-8. If no roadmap source exists, route to `to-roadmap` after intake grill.
-9. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
+7. If existing agent instructions or docs indexes name project-specific roadmap/current-work files, reuse those files by default and record the mapping. Do not create duplicate `easy-roadmap.md` or `current-work.md` unless the owner explicitly approves canonical migration.
+8. Do not migrate old docs unless the user explicitly asks.
+9. If no roadmap source exists, route to `to-roadmap` after intake grill.
+10. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
 
 ## Matt Skills Dependency
 
@@ -60,12 +61,15 @@ Owner confirmation overrides all defaults.
 
 Read `references/docs-model.md` before creating or updating files.
 
+The docs model defines default names, not mandatory names. Project-specific files named by `AGENTS.md`, `CLAUDE.md`, or `docs/README.md` remain authoritative unless the owner chooses migration.
+
 ## Migration Policy
 
 Default mode is additive:
 
 - create missing docs
 - preserve existing docs
+- reuse existing authoritative roadmap/status files when present
 - report suggested renames or migrations
 
 Explicit migration mode may map:
