@@ -1,6 +1,6 @@
 ---
 name: easy-coding
-description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to grill, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as grill-with-docs, goal-plan-decomposer, diagnose, tdd, doc-sync, and finish-feature-dev.
+description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to grill, write-spec, plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as grill-with-docs, write-spec, goal-plan-decomposer, diagnose, tdd, doc-sync, and finish-feature-dev.
 ---
 
 # Easy Coding
@@ -17,7 +17,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 - Owner-facing flow has only three normal gates: grill, manual acceptance, and finish confirmation.
 - After grill is resolved, spec draft, plan, implement, verify, and review-fix are agent-owned unless a blocking product decision appears.
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
-- Write a spec draft from grill results before planning. Read `references/spec-writing.md` when doing this.
+- Route to `write-spec` after grill and before planning.
 - Use `goal-plan-decomposer` after a spec is accepted and the work needs a goal-mode execution plan.
 - Use `diagnose` only for non-trivial bugs, regressions, acceptance failures, or unknown failure modes.
 - Use `tdd` when the work is safest to drive by tests and behavior contracts.
@@ -44,8 +44,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 After grill is complete, proceed autonomously unless a human gate is hit.
 
 1. **Spec Draft**
-   - Synthesize the spec from grill decisions, repo context, accepted research, and explicit assumptions.
-   - Use `references/spec-writing.md` for the required structure and review loop.
+   - Use `write-spec` to synthesize the spec from grill decisions, repo context, accepted research, and explicit assumptions.
    - If the spec exposes a missing product decision, return to grill with the smallest blocking question.
    - If no blocking questions remain, treat the spec as the accepted execution source and continue.
 

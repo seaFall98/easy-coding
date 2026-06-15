@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Spec"
+  short_description: "Turn grill results into a formal executable spec."
+  default_prompt: "Use $write-spec to turn these grill results into a spec draft."

@@ -3,7 +3,7 @@
 ## Routing
 
 - `grill-with-docs`: unclear requirements, contested terminology, risky domain decisions, or cases where mature solutions may already exist.
-- `spec-writing`: grill is complete and a spec draft needs to be synthesized from the confirmed decisions.
+- `write-spec`: grill is complete and a spec draft needs to be synthesized from the confirmed decisions.
 - `goal-plan-decomposer`: grill is complete and the accepted spec or roadmap needs a goal-mode execution plan.
 - `diagnose`: reproducible bug, regression, manual acceptance failure, or unknown failure mode.
 - `tdd`: behavior is best driven by tests and the implementation can be safely grown from them.

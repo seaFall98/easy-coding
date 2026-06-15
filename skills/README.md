@@ -24,6 +24,7 @@ Matt Pocock skills snapshot:
 
 Local workflow skills:
 
+- `write-spec`
 - `goal-plan-decomposer`
 - `doc-sync`
 - `finish-feature-dev`
