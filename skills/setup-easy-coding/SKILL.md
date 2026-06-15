@@ -21,14 +21,21 @@ Initialize a project so `$easy-coding` knows where source code lives, where work
    - `CLAUDE.md`
    - `docs/README.md`
    - existing roadmap/current status files
-4. Route to `setup-matt-pocock-skills` if the project has not already configured issue tracker, triage labels, and domain docs.
-5. Create missing easy-coding docs:
+4. Check whether Matt Pocock skills are installed. If missing, stop and tell the owner to install them; do not create duplicate local copies.
+5. Route to `setup-matt-pocock-skills` if the project has not already configured issue tracker, triage labels, and domain docs.
+6. Create missing easy-coding docs:
    - `docs/easy-roadmap.md`
    - `docs/current-work.md`
    - `docs/batch/`
-6. Do not migrate old docs unless the user explicitly asks.
-7. If no roadmap source exists, route to `to-roadmap` after intake grill.
-8. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
+7. Do not migrate old docs unless the user explicitly asks.
+8. If no roadmap source exists, route to `to-roadmap` after intake grill.
+9. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
+
+## Matt Skills Dependency
+
+`easy-coding` depends on Matt Pocock skills by name, including `grill-with-docs`, `diagnose`, `tdd`, `to-prd`, `to-issues`, `triage`, and related skills.
+
+Do not install duplicate copies from this repository. The Matt snapshot in `vendor/` is for reference only.
 
 ## Defaults
 

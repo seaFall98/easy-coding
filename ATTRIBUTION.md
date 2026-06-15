@@ -1,16 +1,16 @@
 # Attribution
 
-`easy-coding` includes and adapts a curated set of agent skills for AI-assisted feature delivery.
+`easy-coding` includes original workflow skills and a non-installed reference snapshot of Matt Pocock skills.
 
 ## Matt Pocock Skills
 
-This repository includes a local snapshot of Matt Pocock skills:
+This repository keeps a local snapshot under `vendor/matt-pocock-skills/` for attribution and reference only. These skills are not installed by default, which avoids duplicate names when users already have Matt Pocock skills installed.
 
 - Repository: https://github.com/mattpocock/skills
 - License: MIT
 - Copyright: Copyright (c) 2026 Matt Pocock
 
-Included Matt Pocock skills in this initial snapshot:
+Snapshot skills:
 
 - `caveman`
 - `diagnose`
@@ -30,9 +30,7 @@ Included Matt Pocock skills in this initial snapshot:
 
 This repository is independently maintained and does not automatically sync upstream changes.
 
-## Local Workflow Skills
-
-The initial snapshot also includes local workflow skills created or adapted during real project feature development:
+## Easy Coding Core Skills
 
 - `easy-coding`
 - `setup-easy-coding`

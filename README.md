@@ -2,19 +2,24 @@
 
 `easy-coding` is a lightweight AI-driven feature delivery workflow.
 
-It provides one entry skill, `$easy-coding`, that routes a complex web/full-stack feature through the right workflow stage and supporting skills: grill, spec draft, goal-mode planning, implementation, verification, review-fix, manual acceptance, and finish.
+It provides one entry skill, `$easy-coding`, that routes a complex web/full-stack feature through the right workflow stage and supporting skills: setup, roadmap, grill, spec draft, goal-mode planning, implementation, verification, review-fix, manual acceptance, and finish.
 
 ## Positioning
 
-This project blends Matt Pocock skills with practical AI coding workflow patterns from real feature development. It is not a fork of Matt Pocock skills and does not promise upstream sync. It packages a local snapshot of the Matt Pocock skills set, plus the `easy-coding` orchestration layer and a small set of workflow additions.
+This project blends Matt Pocock skills with practical AI coding workflow patterns from real feature development. It is not a fork of Matt Pocock skills and does not promise upstream sync.
+
+Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names.
 
 ## Install
 
+Install Matt Pocock skills first, then install easy-coding core skills:
+
 ```bash
-npx skills add <your-github-org>/easy-coding --all
+npx skills add mattpocock/skills --all
+npx skills add seaFall98/easy-coding --all
 ```
 
-For local testing from this checkout:
+Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 7 core easy-coding skills.`n`nFor local testing from this checkout:
 
 ```bash
 npx skills add /path/to/easy-coding --all
@@ -32,7 +37,6 @@ $easy-coding aaa-heavy ...
 
 If no tier is supplied, `$easy-coding` chooses the smallest viable workflow.
 
-
 ## Docs Model
 
 For projects adopting the full workflow, run `$setup-easy-coding` first. It creates or completes:
@@ -49,6 +53,7 @@ Each feature creates its own `docs/batch/batchN-feature-name/` directory with `S
 ## Roadmap Creation
 
 `setup-easy-coding` does not invent a roadmap. For existing projects, the owner should identify the accepted global plan, roadmap, PRD, or strategy document to migrate. For new projects, run `$to-roadmap` after a project intake grill.
+
 ## Owner Gates
 
 Owners normally participate in only three gates:
@@ -61,8 +66,8 @@ Spec draft, planning, implementation, verification, and review-fix are agent-own
 
 ## Included Skills
 
-See `skills/` for the packaged skill set and `ATTRIBUTION.md` for source notes.
+See `skills/` for installed core skills and `vendor/` for the non-installed Matt Pocock snapshot.
 
 ## Maintenance
 
-See docs/KNOWN_GAPS.md for current follow-up work and validation gaps.
+See `docs/KNOWN_GAPS.md` for current follow-up work and validation gaps.
