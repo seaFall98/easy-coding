@@ -1,6 +1,6 @@
 ---
 name: easy-coding
-description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to setup-easy-coding, grill, write-spec, goal-plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as setup-easy-coding, grill-with-docs, write-spec, goal-plan, diagnose, tdd, doc-sync, and finish.
+description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to setup-easy-coding, to-roadmap, grill, write-spec, goal-plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as setup-easy-coding, to-roadmap, grill-with-docs, write-spec, goal-plan, diagnose, tdd, doc-sync, and finish.
 ---
 
 # Easy Coding
@@ -15,6 +15,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 - Default to the smallest viable workflow that can still reach real acceptance.
 - Keep `Resolved Decisions` current. Record the current stage, confirmed choices, and next action after each meaningful response.
 - If a repo has not adopted the easy-coding docs model, route to `setup-easy-coding` before feature work.
+- If no accepted roadmap exists, route to `to-roadmap` after project intake grill.
 - Owner-facing flow has only three normal gates: grill, manual acceptance, and finish confirmation.
 - After grill is resolved, spec draft, plan, implement, verify, and review-fix are agent-owned unless a blocking product decision appears.
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
@@ -29,6 +30,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 
 1. **Grill**
    - Clarify the request, constraints, non-goals, and owner decisions.
+   - For project setup or roadmap creation, first confirm workspace root, source git root, docs root, and collaboration model.
    - Research mature or official solutions when the domain is risky or already solved well elsewhere.
    - Stop grilling when the agent can write a coherent spec and execute without guessing.
 

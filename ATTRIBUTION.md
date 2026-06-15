@@ -36,6 +36,7 @@ The initial snapshot also includes local workflow skills created or adapted duri
 
 - `easy-coding`
 - `setup-easy-coding`
+- `to-roadmap`
 - `write-spec`
 - `goal-plan`
 - `doc-sync`

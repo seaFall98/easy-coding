@@ -34,6 +34,7 @@ Do not assume any project-specific layout. Use the files that actually exist.
 ## What to Sync
 
 - Current phase, active branch, active feature, or completed work status
+- Confirmed workspace root, source git root, docs root, and active batch path
 - Roadmap task state when acceptance or merge changes it
 - Spec/plan changes when grill decisions alter scope
 - Active batch `IMPLEMENTATION_PLAN.md` phase status, verification notes, review-fix notes, and acceptance notes

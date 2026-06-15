@@ -45,6 +45,10 @@ docs/
 ```
 
 Each feature creates its own `docs/batch/batchN-feature-name/` directory with `SPEC.md` and `IMPLEMENTATION_PLAN.md` as the required live documents.
+
+## Roadmap Creation
+
+`setup-easy-coding` does not invent a roadmap. For existing projects, the owner should identify the accepted global plan, roadmap, PRD, or strategy document to migrate. For new projects, run `$to-roadmap` after a project intake grill.
 ## Owner Gates
 
 Owners normally participate in only three gates:

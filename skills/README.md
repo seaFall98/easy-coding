@@ -4,6 +4,7 @@ Primary entry:
 
 - `easy-coding`: workflow router for feature delivery.
 - `setup-easy-coding`: initializes the docs model for a project.
+- `to-roadmap`: creates or migrates `easy-roadmap.md` after owner grill.
 
 Matt Pocock skills snapshot:
 

@@ -2,12 +2,28 @@
 
 ## Root Docs
 
+Default outer workspace model:
+
 ```text
-docs/
-  easy-roadmap.md
-  current-work.md
-  batch/
+workspace-root/
+  docs/
+    easy-roadmap.md
+    current-work.md
+    batch/
+  source-repo/
 ```
+
+Single-repo fallback:
+
+```text
+source-repo/
+  docs/
+    easy-roadmap.md
+    current-work.md
+    batch/
+```
+
+Always record the chosen workspace root, source git root, and docs root in `current-work.md`.
 
 ## `docs/easy-roadmap.md`
 
@@ -27,6 +43,9 @@ Current execution state.
 
 Track:
 
+- workspace root
+- source git root
+- docs root
 - active feature/batch
 - active branch
 - current workflow stage

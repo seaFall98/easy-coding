@@ -9,6 +9,7 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 - `doc-sync` now knows the easy-coding docs model, but different project layouts still need examples.
 - `finish` assumes a GitHub PR workflow and should document alternatives for projects without GitHub.
 - `setup-easy-coding` should be tested on both a new repo and an existing repo with legacy roadmap/status docs.
+- `to-roadmap` should be tested on both new-project vision input and existing-roadmap migration input.
 
 ## Packaging Gaps
 

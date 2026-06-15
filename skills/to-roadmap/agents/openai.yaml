@@ -1,0 +1,4 @@
+interface:
+  display_name: "To Roadmap"
+  short_description: "Create or migrate an easy-coding roadmap after grilling."
+  default_prompt: "Use $to-roadmap to create or migrate the project roadmap."

@@ -5,22 +5,49 @@ description: Initialize an existing project for the easy-coding workflow. Use wh
 
 # Setup Easy Coding
 
-Initialize a project so `$easy-coding` knows where to put and find workflow documents.
+Initialize a project so `$easy-coding` knows where source code lives, where workflow docs live, and how feature batches should be organized.
 
 ## Workflow
 
-1. Inspect existing project instructions:
+1. Run a Project Intake Grill before creating files.
+2. Confirm:
+   - workspace root
+   - source git root
+   - docs root
+   - roadmap source or roadmap creation path
+   - branch/PR/acceptance workflow
+3. Inspect existing project instructions:
    - `AGENTS.md`
    - `CLAUDE.md`
    - `docs/README.md`
    - existing roadmap/current status files
-2. Route to `setup-matt-pocock-skills` if the project has not already configured issue tracker, triage labels, and domain docs.
-3. Create missing easy-coding docs:
+4. Route to `setup-matt-pocock-skills` if the project has not already configured issue tracker, triage labels, and domain docs.
+5. Create missing easy-coding docs:
    - `docs/easy-roadmap.md`
    - `docs/current-work.md`
    - `docs/batch/`
-4. Do not migrate old docs unless the user explicitly asks.
-5. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
+6. Do not migrate old docs unless the user explicitly asks.
+7. If no roadmap source exists, route to `to-roadmap` after intake grill.
+8. If legacy docs exist, report the suggested mapping instead of rewriting them by default.
+
+## Defaults
+
+Default to an outer workspace docs model when the project appears to have a workspace root containing one or more source repos:
+
+```text
+workspace-root/
+  docs/
+  source-repo/
+```
+
+In this model:
+
+- docs root: `workspace-root/docs`
+- source git root: `workspace-root/source-repo`
+
+If the current directory is a single source repo with no obvious outer workspace, default to `source-repo/docs`.
+
+Owner confirmation overrides all defaults.
 
 ## Standard Docs
 
@@ -48,4 +75,5 @@ Report:
 - files created
 - existing files reused
 - suggested migrations
+- confirmed workspace/source/docs roots
 - whether `setup-matt-pocock-skills` was run or should be run next
