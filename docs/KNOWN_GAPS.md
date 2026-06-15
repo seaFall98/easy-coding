@@ -19,5 +19,7 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 
 ## Validation Gaps
 
-- Local `npx skills add ... --list --full-depth` detects the skills.
+- `npx skills add seaFall98/easy-coding --list` detects the 7 default core easy-coding skills from GitHub.
+- `npx skills add mattpocock/skills --list` detects the upstream Matt Pocock skills dependency.
 - No fresh-agent forward test has been run against `$easy-coding` yet.
+- No ZBlog P4 dry run has been completed with the full setup -> grill -> spec -> goal-plan path.

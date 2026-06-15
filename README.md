@@ -19,7 +19,9 @@ npx skills add mattpocock/skills --all
 npx skills add seaFall98/easy-coding --all
 ```
 
-Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 7 core easy-coding skills.`n`nFor local testing from this checkout:
+Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 7 core easy-coding skills.
+
+For local testing from this checkout:
 
 ```bash
 npx skills add /path/to/easy-coding --all
