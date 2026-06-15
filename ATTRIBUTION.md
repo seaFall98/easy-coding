@@ -4,21 +4,29 @@
 
 ## Matt Pocock Skills
 
-Several packaged skills are based on Matt Pocock's skills project:
+This repository includes a local snapshot of Matt Pocock skills:
 
 - Repository: https://github.com/mattpocock/skills
-- License: MIT`n- Copyright: Copyright (c) 2026 Matt Pocock
+- License: MIT
+- Copyright: Copyright (c) 2026 Matt Pocock
 
-Included Matt Pocock style skills in this initial snapshot include:
+Included Matt Pocock skills in this initial snapshot:
 
-- `grill-with-docs`
+- `caveman`
 - `diagnose`
-- `tdd`
-- `to-prd`
-- `to-issues`
-- `triage`
-- `zoom-out`
+- `grill-me`
+- `grill-with-docs`
+- `handoff`
 - `improve-codebase-architecture`
+- `prototype`
+- `setup-matt-pocock-skills`
+- `tdd`
+- `teach`
+- `to-issues`
+- `to-prd`
+- `triage`
+- `write-a-skill`
+- `zoom-out`
 
 This repository is independently maintained and does not automatically sync upstream changes.
 
@@ -30,5 +38,3 @@ The initial snapshot also includes local workflow skills created or adapted duri
 - `goal-plan-decomposer`
 - `doc-sync`
 - `finish-feature-dev`
-
-Project-specific details should be generalized before publishing if they should apply outside the original project.

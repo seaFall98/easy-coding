@@ -6,7 +6,7 @@ It provides one entry skill, `$easy-coding`, that routes a complex web/full-stac
 
 ## Positioning
 
-This project blends Matt Pocock skills with practical AI coding workflow patterns from real feature development. It is not a fork of Matt Pocock skills and does not promise upstream sync. It packages a curated snapshot of the skills needed for this workflow, plus the `easy-coding` orchestration layer.
+This project blends Matt Pocock skills with practical AI coding workflow patterns from real feature development. It is not a fork of Matt Pocock skills and does not promise upstream sync. It packages a local snapshot of the Matt Pocock skills set, plus the `easy-coding` orchestration layer and a small set of workflow additions.
 
 ## Install
 

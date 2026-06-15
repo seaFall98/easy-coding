@@ -4,17 +4,27 @@ Primary entry:
 
 - `easy-coding`: workflow router for feature delivery.
 
-Supporting skills:
+Matt Pocock skills snapshot:
 
-- `grill-with-docs`
-- `goal-plan-decomposer`
+- `caveman`
 - `diagnose`
-- `tdd`
-- `to-prd`
-- `to-issues`
-- `triage`
-- `zoom-out`
+- `grill-me`
+- `grill-with-docs`
+- `handoff`
 - `improve-codebase-architecture`
+- `prototype`
+- `setup-matt-pocock-skills`
+- `tdd`
+- `teach`
+- `to-issues`
+- `to-prd`
+- `triage`
+- `write-a-skill`
+- `zoom-out`
+
+Local workflow skills:
+
+- `goal-plan-decomposer`
 - `doc-sync`
 - `finish-feature-dev`
 
