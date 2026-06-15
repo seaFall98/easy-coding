@@ -8,6 +8,14 @@ One sentence on what this feature enables.
 
 Why this feature is needed now, and what existing behavior it changes or extends.
 
+## Options Considered
+
+Include only if there was a meaningful design choice.
+
+- Option A
+- Option B
+- Recommended option and why
+
 ## Scope
 
 What is in scope for this spec.
@@ -56,3 +64,4 @@ Anything that still blocks planning.
 - Terms match the project glossary
 - Every major behavior has a source
 - Acceptance criteria are observable
+- Selected approach is justified when alternatives existed

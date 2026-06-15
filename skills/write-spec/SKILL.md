@@ -8,6 +8,7 @@ description: Turn confirmed grill results, repo context, and accepted research i
 Turn grill output into a short, executable spec that can be planned and implemented without guessing.
 
 Use the normalized spec format in `references/spec-template.md`.
+If the spec is nuanced or the work is high-risk, use `references/spec-document-reviewer-prompt.md` to dispatch a separate reviewer pass after the draft is written.
 
 ## Inputs
 
@@ -53,6 +54,7 @@ Before handing the spec to planning:
 - Check whether terminology matches the project docs and grill decisions.
 - Trim scope if the spec is too broad.
 - Fix placeholders, contradictions, and ambiguous wording inline.
+- If the spec is substantial, run the reviewer prompt against the draft and fold in the useful findings.
 
 If the caller wants explicit review, stop after writing the spec and ask them to review it before planning. Otherwise, continue once the spec is self-consistent and unblocked.
 

@@ -45,3 +45,7 @@ Spec draft, planning, implementation, verification, and review-fix are agent-own
 ## Included Skills
 
 See `skills/` for the packaged skill set and `ATTRIBUTION.md` for source notes.
+
+## Maintenance
+
+See docs/KNOWN_GAPS.md for current follow-up work and validation gaps.
