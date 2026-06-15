@@ -1,0 +1,4 @@
+interface:
+  display_name: "Easy Coding"
+  short_description: "Lightweight AI workflow router for feature delivery."
+  default_prompt: "Use $easy-coding to plan and execute this feature with the right workflow and skills."
