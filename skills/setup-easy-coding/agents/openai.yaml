@@ -1,0 +1,4 @@
+interface:
+  display_name: "Setup Easy Coding"
+  short_description: "Initialize docs and workflow conventions for easy-coding."
+  default_prompt: "Use $setup-easy-coding to prepare this repo for the easy-coding workflow."

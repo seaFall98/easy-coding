@@ -1,9 +1,9 @@
 ---
-name: finish-feature-dev
+name: finish
 description: "Complete the development closure workflow for a feature branch. Use when the user says they are done, ready to wrap up, ready to open a PR, ready to merge, finish this feature, close out this branch, or similar."
 ---
 
-# Finish Feature Development
+# Finish
 
 Complete the standard GitHub PR-based closure workflow for a feature branch.
 
@@ -88,7 +88,13 @@ Ask before deleting the remote branch.
 
 ### 8. Sync docs
 
-Use the repository's documentation model. Look for agent instructions, docs indexes, roadmaps, status files, ADRs, and context files. Update only existing relevant docs unless the owner asked to create a new doc.
+Use the repository's documentation model. If the project uses easy-coding docs, update:
+
+- `docs/easy-roadmap.md`
+- `docs/current-work.md`
+- active `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`
+
+Otherwise, look for agent instructions, docs indexes, roadmaps, status files, ADRs, and context files. Update only existing relevant docs unless the owner asked to create a new doc.
 
 ## Edge Cases
 

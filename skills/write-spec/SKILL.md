@@ -1,6 +1,6 @@
 ---
 name: write-spec
-description: Turn confirmed grill results, repo context, and accepted research into a concise executable SPEC.md for feature delivery. Use after requirements have been grilled and before goal-mode planning, especially when easy-coding needs a spec draft source for goal-plan-decomposer.
+description: Turn confirmed grill results, repo context, and accepted research into a concise executable SPEC.md for feature delivery. Use after requirements have been grilled and before goal-mode planning, especially when easy-coding needs a spec draft source for goal-plan.
 ---
 
 # Write Spec
@@ -25,7 +25,7 @@ If grill results are still missing a blocking decision, ask the smallest blockin
 
 ## Output
 
-Write `SPEC.md` or the path requested by the user. If no file is requested, output the spec in chat.
+Write `SPEC.md` or the path requested by the user. If the project uses easy-coding docs, write to `docs/batch/batchN-feature-name/SPEC.md`. If no file is requested and no docs model exists, output the spec in chat.
 
 Prefer a spec that includes:
 
@@ -70,4 +70,4 @@ If no stop condition remains, treat the spec as the accepted execution source fo
 
 ## Handoff
 
-When the spec is clean, hand it to `goal-plan-decomposer` for goal-mode planning.
+When the spec is clean, hand it to `goal-plan` for goal-mode planning.

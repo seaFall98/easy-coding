@@ -35,7 +35,8 @@ This repository is independently maintained and does not automatically sync upst
 The initial snapshot also includes local workflow skills created or adapted during real project feature development:
 
 - `easy-coding`
+- `setup-easy-coding`
 - `write-spec`
-- `goal-plan-decomposer`
+- `goal-plan`
 - `doc-sync`
-- `finish-feature-dev`
+- `finish`

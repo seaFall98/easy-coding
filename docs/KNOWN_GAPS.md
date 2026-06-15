@@ -4,10 +4,11 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 
 ## Workflow Gaps
 
-- `easy-coding` routes to `write-spec`, but the spec-writing flow should be forward-tested on a real feature before being considered stable.
-- `goal-plan-decomposer` is a local adaptation and should be tested against multiple specs, not only the original ZBlog P3 workflow.
-- `doc-sync` is generic now, but different projects may need examples for common doc layouts.
-- `finish-feature-dev` assumes a GitHub PR workflow and should document alternatives for projects without GitHub.
+- `easy-coding`, `write-spec`, `goal-plan`, `doc-sync`, and `finish` should be forward-tested together on a real feature before the workflow is considered stable.
+- `goal-plan` should be tested against multiple specs, not only the original ZBlog P3 workflow.
+- `doc-sync` now knows the easy-coding docs model, but different project layouts still need examples.
+- `finish` assumes a GitHub PR workflow and should document alternatives for projects without GitHub.
+- `setup-easy-coding` should be tested on both a new repo and an existing repo with legacy roadmap/status docs.
 
 ## Packaging Gaps
 
@@ -18,5 +19,4 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 ## Validation Gaps
 
 - Local `npx skills add ... --list --full-depth` detects the skills.
-- No end-to-end install from GitHub has been run after each change.
 - No fresh-agent forward test has been run against `$easy-coding` yet.

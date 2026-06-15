@@ -1,0 +1,4 @@
+interface:
+  display_name: "Goal Plan"
+  short_description: "Split complex specs into goal-mode implementation plans."
+  default_prompt: "Use $goal-plan to turn this accepted spec into a goal-mode implementation plan."

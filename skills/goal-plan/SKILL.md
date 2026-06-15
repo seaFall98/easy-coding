@@ -1,9 +1,9 @@
 ---
-name: goal-plan-decomposer
+name: goal-plan
 description: Convert an accepted complex spec, roadmap, PRD, or feature plan into a concrete Codex goal-mode implementation plan. Use when the user wants to split a large spec into goal-mode phases, decide one goal vs multiple goals, define review gates, assign subagent work, prevent false completion, or produce an IMPLEMENTATION_PLAN.md-style execution plan.
 ---
 
-# Goal Plan Decomposer
+# Goal Plan
 
 Use this skill to turn an accepted feature spec into an execution plan that Codex can run in goal mode.
 
@@ -28,7 +28,7 @@ Pause when:
 
 ## Output Contract
 
-Produce a goal-ready plan. If the user asks for a file, write `IMPLEMENTATION_PLAN.md` or the requested path. Otherwise output the plan in chat.
+Produce a goal-ready plan. If the project uses easy-coding docs, write to `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`. If the user asks for a different file, use that path. Otherwise output the plan in chat.
 
 The plan should include:
 
@@ -210,6 +210,8 @@ Include resume notes that stay short:
 - next command or check
 - known risks
 - files likely touched next
+
+When writing `IMPLEMENTATION_PLAN.md`, keep it as the live control document. Update it with phase status, verification results, review-fix notes, and final acceptance notes instead of creating a separate acceptance document by default.
 
 ## Anti-Patterns
 

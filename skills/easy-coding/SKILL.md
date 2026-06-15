@@ -1,6 +1,6 @@
 ---
 name: easy-coding
-description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to grill, write-spec, plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as grill-with-docs, write-spec, goal-plan-decomposer, diagnose, tdd, doc-sync, and finish-feature-dev.
+description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to setup-easy-coding, grill, write-spec, goal-plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as setup-easy-coding, grill-with-docs, write-spec, goal-plan, diagnose, tdd, doc-sync, and finish.
 ---
 
 # Easy Coding
@@ -14,15 +14,16 @@ It does not replace specialized skills. It decides the current stage, the right 
 - Treat `a-light`, `aa-standard`, and `aaa-heavy` as workflow tiers, not separate product modes.
 - Default to the smallest viable workflow that can still reach real acceptance.
 - Keep `Resolved Decisions` current. Record the current stage, confirmed choices, and next action after each meaningful response.
+- If a repo has not adopted the easy-coding docs model, route to `setup-easy-coding` before feature work.
 - Owner-facing flow has only three normal gates: grill, manual acceptance, and finish confirmation.
 - After grill is resolved, spec draft, plan, implement, verify, and review-fix are agent-owned unless a blocking product decision appears.
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
 - Route to `write-spec` after grill and before planning.
-- Use `goal-plan-decomposer` after a spec is accepted and the work needs a goal-mode execution plan.
+- Use `goal-plan` after a spec is accepted and the work needs a goal-mode execution plan.
 - Use `diagnose` only for non-trivial bugs, regressions, acceptance failures, or unknown failure modes.
 - Use `tdd` when the work is safest to drive by tests and behavior contracts.
 - Run docs sync as part of finish, not as a separate owner-facing phase.
-- Use `finish-feature-dev` when the branch is ready to close out.
+- Use `finish` when the branch is ready to close out.
 
 ## Owner Flow
 
@@ -45,11 +46,14 @@ After grill is complete, proceed autonomously unless a human gate is hit.
 
 1. **Spec Draft**
    - Use `write-spec` to synthesize the spec from grill decisions, repo context, accepted research, and explicit assumptions.
+   - Put the spec in `docs/batch/batchN-feature-name/SPEC.md` when the project uses the easy-coding docs model.
    - If the spec exposes a missing product decision, return to grill with the smallest blocking question.
    - If no blocking questions remain, treat the spec as the accepted execution source and continue.
 
 2. **Plan**
    - Convert the accepted spec into an executable goal-mode plan.
+   - Put the plan in `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md` when the project uses the easy-coding docs model.
+   - Treat `IMPLEMENTATION_PLAN.md` as the live control document, including phase status and final acceptance notes.
    - Split by behavior and dependency, not by file list.
    - Add review gates for heavy work.
 

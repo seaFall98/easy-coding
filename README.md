@@ -32,6 +32,19 @@ $easy-coding aaa-heavy ...
 
 If no tier is supplied, `$easy-coding` chooses the smallest viable workflow.
 
+
+## Docs Model
+
+For projects adopting the full workflow, run `$setup-easy-coding` first. It creates or completes:
+
+```text
+docs/
+  easy-roadmap.md
+  current-work.md
+  batch/
+```
+
+Each feature creates its own `docs/batch/batchN-feature-name/` directory with `SPEC.md` and `IMPLEMENTATION_PLAN.md` as the required live documents.
 ## Owner Gates
 
 Owners normally participate in only three gates:

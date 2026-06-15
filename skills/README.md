@@ -3,6 +3,7 @@
 Primary entry:
 
 - `easy-coding`: workflow router for feature delivery.
+- `setup-easy-coding`: initializes the docs model for a project.
 
 Matt Pocock skills snapshot:
 
@@ -25,8 +26,8 @@ Matt Pocock skills snapshot:
 Local workflow skills:
 
 - `write-spec`
-- `goal-plan-decomposer`
+- `goal-plan`
 - `doc-sync`
-- `finish-feature-dev`
+- `finish`
 
 Install all skills together so `$easy-coding` can route to them.
