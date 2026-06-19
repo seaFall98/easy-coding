@@ -1,4 +1,4 @@
-﻿---
+---
 name: goal-plan
 description: Convert an accepted complex spec, roadmap, PRD, or feature plan into a concrete Codex goal-mode implementation plan. Use when the user wants to split a large spec into goal-mode phases, decide one goal vs multiple goals, define review gates, assign subagent work, prevent false completion, or produce an IMPLEMENTATION_PLAN.md-style execution plan.
 ---
@@ -231,4 +231,3 @@ Avoid:
 Be decisive. If the spec is executable, output the plan. If blocked, ask the smallest number of questions.
 
 When uncertain, prefer one goal with phases, clear review gates, and resume notes.
-

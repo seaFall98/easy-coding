@@ -1,4 +1,4 @@
-﻿# Skill Map
+# Skill Map
 
 ## Routing
 
@@ -23,9 +23,10 @@ Internal checkpoints are not owner gates. Spec written, plan written, phase comp
 
 ## Tier Hints
 
-- `a-light`: small fix, copy, style, or contained behavior change.
-- `aa-standard`: one feature or one workflow with a clear spec and plan.
-- `aaa-heavy`: multi-stage feature, cross-system work, migration, middleware, or complex UI/state.
+- `light`: small fix, copy, style, or contained behavior change.
+- `standard`: one feature or one workflow with a clear spec and plan.
+- `heavy`: multi-stage feature, cross-system work, migration, middleware, or complex UI/state.
+- Legacy aliases `a-light`, `aa-standard`, and `aaa-heavy` are accepted for compatibility, but owner-facing examples should use `light`, `standard`, and `heavy`.
 
 ## When to Grill
 
@@ -52,5 +53,3 @@ Poor fits:
 - subjective UI aesthetics
 
 For frontend work, test logic and user-observable behavior. Do not force TDD onto visual design polish.
-
-

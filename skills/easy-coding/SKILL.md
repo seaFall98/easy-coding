@@ -1,4 +1,4 @@
-﻿---
+---
 name: easy-coding
 description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to setup-easy-coding, to-roadmap, grill, write-spec, goal-plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as setup-easy-coding, to-roadmap, grill-with-docs, write-spec, goal-plan, diagnose, tdd, doc-sync, and finish.
 ---
@@ -118,4 +118,3 @@ Be concise and decisive. Tell the user:
 - what the agent will do next
 - what the owner needs to do, if anything
 - which supporting skill is being used
-

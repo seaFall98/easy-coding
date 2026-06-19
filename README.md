@@ -1,4 +1,4 @@
-﻿# easy-coding
+# easy-coding
 
 `easy-coding` is a lightweight AI-driven feature delivery workflow.
 
@@ -96,4 +96,3 @@ See `skills/` for installed core skills and `vendor/` for the non-installed Matt
 ## Maintenance
 
 See `docs/KNOWN_GAPS.md` for current follow-up work and validation gaps.
-
