@@ -18,6 +18,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 - If no accepted roadmap exists, route to `to-roadmap` after project intake grill.
 - Owner-facing flow has only three normal gates: grill, manual acceptance, and finish confirmation.
 - After grill is resolved, spec draft, plan, implement, verify, and review-fix are agent-owned unless a blocking product decision appears.
+- Internal checkpoints are not owner gates. Do not stop, final-answer, or wait for the owner after writing a spec, writing a plan, completing an implementation phase, passing a compile/build, or updating docs. Report those checkpoints in commentary, update the live plan/status, and continue the agent-owned pipeline until a real human gate or acceptance handoff is reached.
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
 - Route to `write-spec` after grill and before planning.
 - Use `goal-plan` after a spec is accepted and the work needs a goal-mode execution plan.
@@ -45,6 +46,14 @@ It does not replace specialized skills. It decides the current stage, the right 
 ## Agent-Owned Internal Pipeline
 
 After grill is complete, proceed autonomously unless a human gate is hit.
+
+Important continuation rule:
+
+- Treat every internal phase/checkpoint as a resume marker, not a stopping point.
+- Use commentary for checkpoint updates such as "Phase A passed; continuing Phase B".
+- Do not end the turn with a final answer merely because a phase completed or verification passed.
+- A final answer is appropriate only for a real human gate, a blocker, or the final acceptance handoff.
+- If the work is large, continue phase by phase; task size alone is not a blocker.
 
 1. **Spec Draft**
    - Use `write-spec` to synthesize the spec from grill decisions, repo context, accepted research, and explicit assumptions.
@@ -74,6 +83,7 @@ After grill is complete, proceed autonomously unless a human gate is hit.
 
 6. **Acceptance Handoff**
    - Tell the owner exactly what changed, what passed, what was not verified, and how to manually accept.
+   - This is the first normal stopping point after grill unless a blocker or human gate was hit earlier.
 
 ## Finish
 
@@ -89,6 +99,7 @@ When the owner confirms finish:
 - Ask the smallest blocking question when a decision is truly missing.
 - Do not carry old stage assumptions forward if the current `Resolved Decisions` says otherwise.
 - Do not ask the owner to approve routine spec, plan, implementation, or review-fix steps after grill is complete.
+- Do not convert an internal checkpoint into an owner handoff. If no human gate is hit, keep working.
 
 ## Output Style
 
