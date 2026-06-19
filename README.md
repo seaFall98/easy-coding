@@ -73,6 +73,22 @@ Owners normally participate in only three gates:
 
 Spec draft, planning, implementation, verification, and review-fix are agent-owned after grill unless a blocking product decision appears.
 
+Internal checkpoints are not owner gates. After grill, the agent should not stop merely because it wrote a spec, wrote a plan, completed a phase, passed a build, or updated docs. Those are commentary/status updates; the next normal owner-facing stop is the manual acceptance handoff.
+
+## Goal Mode
+
+Goal-mode execution is explicit opt-in, not inferred from ordinary feature work.
+
+Use wording such as:
+
+```text
+$easy-coding aaa-heavy goal-mode ...
+$easy-coding aaa-heavy use /goal after grill ...
+$easy-coding aaa-heavy create a goal after grill and complete the internal pipeline ...
+```
+
+When goal-mode is explicitly requested, the agent should finish grill, write the spec and implementation plan, write a concise goal prompt for itself, start the goal with the available goal tool, and continue the Agent-Owned Internal Pipeline until a blocker or manual acceptance handoff. If goal tooling is unavailable, the agent should continue the same pipeline without goal mode rather than handing the task back to the owner.
+
 ## Included Skills
 
 See `skills/` for installed core skills and `vendor/` for the non-installed Matt Pocock snapshot.

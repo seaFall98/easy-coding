@@ -5,6 +5,7 @@
 - `grill-with-docs`: unclear requirements, contested terminology, risky domain decisions, or cases where mature solutions may already exist.
 - `write-spec`: grill is complete and a spec draft needs to be synthesized from the confirmed decisions.
 - `goal-plan`: grill is complete and the accepted spec or roadmap needs a goal-mode execution plan.
+- goal-mode start: only after explicit owner wording such as `/goal`, `goal mode`, or `create a goal`; after opt-in, the agent writes the goal prompt and starts the goal instead of asking the owner to do it manually.
 - `diagnose`: reproducible bug, regression, manual acceptance failure, or unknown failure mode.
 - `tdd`: behavior is best driven by tests and the implementation can be safely grown from them.
 - `doc-sync`: run inside finish after owner confirms the feature can close.
@@ -17,6 +18,8 @@
 - Finish confirmation: owner confirms closeout.
 
 Everything between grill and manual acceptance is agent-owned unless a blocking decision appears.
+
+Internal checkpoints are not owner gates. Spec written, plan written, phase complete, build passed, or docs updated are not reasons to final-answer and wait. Report them in commentary and continue until a real human gate, blocker, or acceptance handoff.
 
 ## Tier Hints
 

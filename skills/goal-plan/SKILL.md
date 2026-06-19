@@ -30,6 +30,8 @@ Pause when:
 
 Produce a goal-ready plan. If the project uses easy-coding docs, write to `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`. If the user asks for a different file, use that path. Otherwise output the plan in chat.
 
+If the owner explicitly requested goal-mode execution, also produce a concise goal prompt after the plan is clean. The prompt should be ready to pass to the available goal tool and should include objective, spec path, plan path, branch, current phase, stop conditions, verification expectations, and manual acceptance boundary. If goal tooling is unavailable or not explicitly authorized, continue the normal agent-owned pipeline without stopping for owner approval.
+
 The plan should include:
 
 ```markdown
