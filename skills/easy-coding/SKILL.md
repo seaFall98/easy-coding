@@ -22,6 +22,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
 - Route to `write-spec` after grill and before planning.
 - Use `goal-plan` after a spec is accepted and the work needs a goal-mode execution plan.
+- Use goal-mode only when the owner explicitly asks for `/goal`, `goal mode`, `create a goal`, or an equivalent explicit goal request. Do not infer goal-tool authorization from ordinary feature work.
 - Use `diagnose` only for non-trivial bugs, regressions, acceptance failures, or unknown failure modes.
 - Use `tdd` when the work is safest to drive by tests and behavior contracts.
 - Run docs sync as part of finish, not as a separate owner-facing phase.
@@ -68,6 +69,13 @@ Important continuation rule:
    - Split by behavior and dependency, not by file list.
    - Add review gates for heavy work.
 
+2.5. **Goal Prompt and Goal-Mode Start**
+   - If and only if the owner explicitly requested goal-mode execution, write a concise goal prompt after the spec and plan are clean.
+   - The goal prompt should include objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
+   - Then start the goal with the available goal tool and continue the agent-owned pipeline under that goal.
+   - If goal tooling is unavailable, unavailable in the current mode, or not explicitly authorized by the owner, continue the same agent-owned pipeline without goal mode. Do not stop merely to ask the owner to invoke `/goal`.
+   - A skill instruction alone is not user authorization to create a goal; the owner request must be explicit in the conversation or command.
+
 3. **Implement**
    - Work in one feature branch.
    - Use subagents only where they can make a bounded contribution.
@@ -100,6 +108,7 @@ When the owner confirms finish:
 - Do not carry old stage assumptions forward if the current `Resolved Decisions` says otherwise.
 - Do not ask the owner to approve routine spec, plan, implementation, or review-fix steps after grill is complete.
 - Do not convert an internal checkpoint into an owner handoff. If no human gate is hit, keep working.
+- Do not create a goal unless goal-mode execution was explicitly requested by the owner; if it was requested, create the goal after spec/plan instead of asking the owner to trigger it manually.
 
 ## Output Style
 
