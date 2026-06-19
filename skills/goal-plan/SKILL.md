@@ -1,4 +1,4 @@
----
+﻿---
 name: goal-plan
 description: Convert an accepted complex spec, roadmap, PRD, or feature plan into a concrete Codex goal-mode implementation plan. Use when the user wants to split a large spec into goal-mode phases, decide one goal vs multiple goals, define review gates, assign subagent work, prevent false completion, or produce an IMPLEMENTATION_PLAN.md-style execution plan.
 ---
@@ -30,7 +30,7 @@ Pause when:
 
 Produce a goal-ready plan. If the project uses easy-coding docs, write to `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`. If the user asks for a different file, use that path. Otherwise output the plan in chat.
 
-If the owner explicitly requested goal-mode execution, also produce a concise goal prompt after the plan is clean. The prompt should be ready to pass to the available goal tool and should include objective, spec path, plan path, branch, current phase, stop conditions, verification expectations, and manual acceptance boundary. If goal tooling is unavailable or not explicitly authorized, continue the normal agent-owned pipeline without stopping for owner approval.
+If the owner explicitly requested goal-mode execution, also produce a concise goal prompt after the plan is clean. Explicit requests include `/goal`, `goal mode`, `create a goal`, `创建 goal`, `完成Pipeline`, or shorthand such as `/easy-coding heavy 创建 goal完成Pipeline`. The prompt should be ready to pass to the available goal tool and should include objective, spec path, plan path, branch, current phase, stop conditions, verification expectations, and manual acceptance boundary. Its objective is the complete Agent-Owned Internal Pipeline, not merely planning or goal creation. If goal tooling is unavailable or not explicitly authorized, continue the normal agent-owned pipeline without stopping for owner approval.
 
 The plan should include:
 
@@ -231,3 +231,4 @@ Avoid:
 Be decisive. If the spec is executable, output the plan. If blocked, ask the smallest number of questions.
 
 When uncertain, prefer one goal with phases, clear review gates, and resume notes.
+

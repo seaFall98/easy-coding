@@ -1,11 +1,11 @@
-# Skill Map
+﻿# Skill Map
 
 ## Routing
 
 - `grill-with-docs`: unclear requirements, contested terminology, risky domain decisions, or cases where mature solutions may already exist.
 - `write-spec`: grill is complete and a spec draft needs to be synthesized from the confirmed decisions.
 - `goal-plan`: grill is complete and the accepted spec or roadmap needs a goal-mode execution plan.
-- goal-mode start: only after explicit owner wording such as `/goal`, `goal mode`, or `create a goal`; after opt-in, the agent writes the goal prompt and starts the goal instead of asking the owner to do it manually.
+- goal-mode start: only after explicit owner wording such as `/goal`, `goal mode`, `create a goal`, `创建 goal`, or `完成Pipeline`; after opt-in, the agent writes the goal prompt and starts the goal instead of asking the owner to do it manually. Example: `/easy-coding heavy 创建 goal完成Pipeline`.
 - `diagnose`: reproducible bug, regression, manual acceptance failure, or unknown failure mode.
 - `tdd`: behavior is best driven by tests and the implementation can be safely grown from them.
 - `doc-sync`: run inside finish after owner confirms the feature can close.
@@ -52,3 +52,5 @@ Poor fits:
 - subjective UI aesthetics
 
 For frontend work, test logic and user-observable behavior. Do not force TDD onto visual design polish.
+
+

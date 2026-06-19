@@ -1,4 +1,4 @@
----
+﻿---
 name: easy-coding
 description: Lightweight AI workflow router for complex feature delivery. Use when orchestrating multi-step web or full-stack feature work, deciding whether to setup-easy-coding, to-roadmap, grill, write-spec, goal-plan, implement autonomously, diagnose, accept, or finish, and when routing to supporting skills such as setup-easy-coding, to-roadmap, grill-with-docs, write-spec, goal-plan, diagnose, tdd, doc-sync, and finish.
 ---
@@ -11,7 +11,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 
 ## Core Rules
 
-- Treat `a-light`, `aa-standard`, and `aaa-heavy` as workflow tiers, not separate product modes.
+- Treat `light`, `standard`, and `heavy` as workflow tiers, not separate product modes. Accept legacy aliases `a-light`, `aa-standard`, and `aaa-heavy`, but prefer the short tier names in examples and owner-facing docs.
 - Default to the smallest viable workflow that can still reach real acceptance.
 - Keep `Resolved Decisions` current. Record the current stage, confirmed choices, and next action after each meaningful response.
 - If a repo has not adopted the easy-coding docs model, route to `setup-easy-coding` before feature work.
@@ -22,7 +22,7 @@ It does not replace specialized skills. It decides the current stage, the right 
 - Use `grill-with-docs` first when requirements, boundaries, terminology, or proven solutions are still unclear.
 - Route to `write-spec` after grill and before planning.
 - Use `goal-plan` after a spec is accepted and the work needs a goal-mode execution plan.
-- Use goal-mode only when the owner explicitly asks for `/goal`, `goal mode`, `create a goal`, or an equivalent explicit goal request. Do not infer goal-tool authorization from ordinary feature work.
+- Use goal-mode only when the owner explicitly asks for `/goal`, `goal mode`, `create a goal`, `创建 goal`, `完成Pipeline`, or an equivalent explicit goal request. Do not infer goal-tool authorization from ordinary feature work.
 - Use `diagnose` only for non-trivial bugs, regressions, acceptance failures, or unknown failure modes.
 - Use `tdd` when the work is safest to drive by tests and behavior contracts.
 - Run docs sync as part of finish, not as a separate owner-facing phase.
@@ -70,9 +70,9 @@ Important continuation rule:
    - Add review gates for heavy work.
 
 2.5. **Goal Prompt and Goal-Mode Start**
-   - If and only if the owner explicitly requested goal-mode execution, write a concise goal prompt after the spec and plan are clean.
+   - If and only if the owner explicitly requested goal-mode execution, write a concise goal prompt after the spec and plan are clean. Example owner wording: `/easy-coding heavy 创建 goal完成Pipeline`.
    - The goal prompt should include objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
-   - Then start the goal with the available goal tool and continue the agent-owned pipeline under that goal.
+   - Then start the goal with the available goal tool and continue the complete Agent-Owned Internal Pipeline under that goal: spec draft -> plan -> implement -> verify -> review-fix -> acceptance handoff.
    - If goal tooling is unavailable, unavailable in the current mode, or not explicitly authorized by the owner, continue the same agent-owned pipeline without goal mode. Do not stop merely to ask the owner to invoke `/goal`.
    - A skill instruction alone is not user authorization to create a goal; the owner request must be explicit in the conversation or command.
 
@@ -108,7 +108,7 @@ When the owner confirms finish:
 - Do not carry old stage assumptions forward if the current `Resolved Decisions` says otherwise.
 - Do not ask the owner to approve routine spec, plan, implementation, or review-fix steps after grill is complete.
 - Do not convert an internal checkpoint into an owner handoff. If no human gate is hit, keep working.
-- Do not create a goal unless goal-mode execution was explicitly requested by the owner; if it was requested, create the goal after spec/plan instead of asking the owner to trigger it manually.
+- Do not create a goal unless goal-mode execution was explicitly requested by the owner; if it was requested, create the goal after spec/plan instead of asking the owner to trigger it manually. `创建 goal完成Pipeline` means the goal objective is the whole Agent-Owned Internal Pipeline, not merely planning or starting a goal.
 
 ## Output Style
 
@@ -118,3 +118,4 @@ Be concise and decisive. Tell the user:
 - what the agent will do next
 - what the owner needs to do, if anything
 - which supporting skill is being used
+
