@@ -16,6 +16,7 @@ Before starting, verify:
 - The working tree is clean.
 - The `gh` CLI is authenticated.
 - The current branch is a feature branch, not `main` or `master`.
+- The target base branch is known. Use `main` by default unless the repo or owner says otherwise.
 
 If any prerequisite fails, report what is missing and stop.
 
@@ -26,27 +27,65 @@ If any prerequisite fails, report what is missing and stop.
 ```bash
 git branch --show-current
 git remote get-url origin
+git status --short
 ```
 
 Stop if already on `main` or `master`.
 
-### 2. Sync local main
+### 2. Fetch and sync the base branch
 
 ```bash
-git checkout main
-git pull origin main
+git fetch origin --prune
+git switch <base-branch>
+git pull --ff-only origin <base-branch>
 ```
 
-If pull fails because histories diverged, stop and ask the owner to resolve it. Do not force reset or rebase without explicit approval.
+If the base branch cannot fast-forward, stop and report the divergence. Do not force reset or rebase without explicit approval.
 
-### 3. Push the feature branch
+### 3. Integrate the latest base branch locally
+
+Return to the feature branch and integrate the current base branch before pushing or creating a PR:
 
 ```bash
-git checkout <feature-branch>
+git switch <feature-branch>
+git merge --no-edit origin/<base-branch>
+```
+
+Use merge by default because it does not rewrite branch history and is safer for shared feature branches. If the repository requires linear history, ask the owner before rebasing. Never force-push after a rebase unless the owner explicitly approves `--force-with-lease`.
+
+If conflicts occur:
+
+- Resolve them locally on the feature branch.
+- Keep conflict resolution in the feature branch commit history.
+- Re-run relevant verification after the conflict is resolved.
+- Stop and ask for help if the conflict requires product or architecture decisions.
+
+Do not open a PR while the feature branch is behind the base branch or has unresolved conflicts.
+
+### 4. Re-run relevant verification
+
+Integration can break previously passing work. Re-run the checks that cover the changed area, or clearly report why a check is skipped.
+
+Never reuse old verification results as proof after merging in new base-branch changes.
+
+If integration requires fixes, make them on the feature branch and commit them before pushing. The working tree must be clean before PR creation.
+
+### 5. Push the feature branch
+
+```bash
 git push origin <feature-branch>
 ```
 
-### 4. Build PR title and body
+If push is rejected because the remote feature branch advanced, fetch and inspect the divergence. Do not force-push by default.
+
+```bash
+git fetch origin <feature-branch>
+git log --oneline --left-right HEAD...origin/<feature-branch>
+```
+
+Merge the remote feature branch locally or ask the owner what to do if the divergence is not obviously safe.
+
+### 6. Build PR title and body
 
 Use real branch commits and real verification data.
 
@@ -60,33 +99,33 @@ PR body should include:
 
 Never fabricate test results.
 
-### 5. Create or report PR
+### 7. Create or report PR
 
 ```bash
-gh pr create --base main --head <feature-branch> --title "<title>" --body "<body>"
+gh pr create --base <base-branch> --head <feature-branch> --title "<title>" --body "<body>"
 ```
 
 If a PR already exists, report its URL instead of creating a duplicate.
 
-### 6. Wait for owner merge
+### 8. Wait for owner merge
 
 Tell the owner to review and merge on GitHub, then report back.
 
 Do not merge via CLI unless the owner explicitly asks for it.
 
-### 7. Clean up after merge
+### 9. Clean up after merge
 
 After owner confirms merge:
 
 ```bash
-git checkout main
-git pull origin main
+git switch <base-branch>
+git pull --ff-only origin <base-branch>
 git branch -d <feature-branch>
 ```
 
 Ask before deleting the remote branch.
 
-### 8. Sync docs
+### 10. Sync docs
 
 Use the repository's documentation model. If the project uses easy-coding default docs, update:
 
@@ -107,7 +146,10 @@ Otherwise, look for agent instructions, docs indexes, roadmaps, status files, AD
 | Branch already pushed | Continue to PR creation |
 | PR already exists | Report existing URL |
 | `gh` unauthenticated | Ask owner to run `gh auth login` |
-| Pull fails | Stop and report conflict/divergence |
+| Base branch cannot fast-forward | Stop and report conflict/divergence |
+| Feature conflicts with base | Resolve locally on feature branch, re-run verification, then push |
+| Push rejected because remote branch advanced | Fetch, inspect divergence, and do not force-push by default |
+| Linear history required | Ask before rebase; never force-push without explicit approval |
 | No docs system | Skip docs sync |
 
 ## Completion Output
