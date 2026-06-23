@@ -6,9 +6,9 @@ It provides one entry skill, `$easy-coding`, that routes a complex web/full-stac
 
 ## Positioning
 
-This project blends Matt Pocock skills, OpenCodeReview, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
+This project blends Matt Pocock skills, local/agentic code review tools, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
 
-Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. OpenCodeReview is also installed separately and used as the preferred default code-review tool when available.
+Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. External review tools such as CodeRabbit CLI or OpenCodeReview are configured separately and selected by the review policy.
 
 ## Install
 
@@ -16,20 +16,31 @@ Prerequisites:
 
 - `npx skills` available in your agent environment
 - Matt Pocock skills installed separately
-- OpenCodeReview skill and `ocr` CLI installed separately for default automatic review-fix
+- Subagent tooling available in the agent environment for mandatory review-fix
+- CodeRabbit CLI/auth for the default subagent review tool
+- OpenCodeReview skill and `ocr` CLI only when you want the optional OCR review path
 - `git` for branch workflows
 - authenticated `gh` CLI when using `$finish` with GitHub PRs
 
-Install Matt Pocock skills and OpenCodeReview first, then install easy-coding core skills:
+Install Matt Pocock skills and the default CodeRabbit review tool first, then install easy-coding core skills:
 
 ```bash
 npx skills add mattpocock/skills --all
+curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+coderabbit --version
+coderabbit auth login --agent
+coderabbit auth status --agent
+npx skills add seaFall98/easy-coding --all
+```
+
+Configure the optional OpenCodeReview path only when you intend to use OCR:
+
+```bash
 npx skills add alibaba/open-code-review --skill open-code-review
 npm install -g @alibaba-group/open-code-review
 ocr config provider
 ocr config model
 ocr llm test
-npx skills add seaFall98/easy-coding --all
 ```
 
 Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 7 core easy-coding skills.
@@ -83,9 +94,9 @@ Internal checkpoints are not owner gates. After grill, the agent should not stop
 
 ## Review-Fix
 
-OpenCodeReview is the preferred default reviewer for review-fix when installed and configured. Easy Coding invokes the `ocr` CLI directly during the agent-owned pipeline; the owner should not need to type a slash command or `@Open Code Review` for normal batch work.
+Review-fix is mandatory before manual acceptance. Easy Coding requires an independent subagent review of the actual diff; by default that subagent uses CodeRabbit local CLI when available/authenticated. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
 
-Install the OpenCodeReview skill for agent guidance and the `ocr` CLI for execution. The Codex plugin is optional for manual invocation, not required for automatic Easy Coding review-fix. Easy Coding still requires a main-agent checklist pass and records the actual review mode used. If OCR is unavailable, the pipeline downgrades to an independent subagent review when possible, then main-agent checklist review, and records the reason.
+OpenCodeReview is optional supporting evidence. CodeRabbit output from the main agent alone does not replace the required subagent reviewer. The subagent should report CodeRabbit findings plus its own judgment; the main agent owns triage, fixes, verification reruns, and the final review record.
 
 ## Goal Mode
 

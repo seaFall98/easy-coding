@@ -1,82 +1,115 @@
 # Review Tools
 
-Load this reference when choosing, installing, checking, running, or recording a code-review tool for Easy Coding review-fix.
+Load this reference when preparing, running, or recording Easy Coding review-fix.
 
 ## Default Policy
 
-OpenCodeReview is the preferred default local CLI reviewer for Easy Coding.
+Review-fix has two mandatory roles:
 
-- Treat OpenCodeReview as a recommended external prerequisite, similar to Matt Pocock skills.
-- For automatic pipeline review-fix, invoke the `ocr` CLI directly. Do not depend on the owner manually typing a slash command or `@Open Code Review`.
-- Install the OpenCodeReview skill for agent guidance. The Codex plugin is optional and useful for manual invocation, but it is not required for Easy Coding's automatic review-fix path.
-- If the OpenCodeReview skill is available in the skill list, load it before running OCR so tool-specific guidance is current.
-- Do not treat it as a hard runtime dependency. Review-fix must still complete when OCR is unavailable.
-- Never claim OpenCodeReview ran unless the command actually ran and its output was inspected.
-- Always keep the main-agent checklist review as the final safety pass.
+1. An independent subagent reviewer.
+2. The main agent as integrator, triager, fixer, and recorder.
 
-Preferred review chain:
+CodeRabbit is the default tool the subagent should use for code review when available/authenticated. OpenCodeReview, PR reviewers, and main-agent checklist review are supporting signals. They do not replace the subagent reviewer.
 
-1. Run OpenCodeReview when installed, configured, and safe for the current diff.
-2. Use an independent subagent review when OCR is unavailable, the work is heavy/risky, or an extra pass is useful.
-3. Finish with the main-agent checklist review.
-4. Use PR/cloud reviewers such as CodeRabbit only when the owner explicitly asks, the repo workflow requires it, or a PR workflow is already active.
+Non-negotiables:
 
-## OpenCodeReview Setup
+- Before manual acceptance, spawn/request a subagent review of the actual diff.
+- Ask the subagent to use CodeRabbit local CLI when it is available/authenticated and suitable for the diff.
+- Give the subagent the accepted scope, changed files, branch/base, relevant docs, verification already run, and project completion rules.
+- Ask the subagent for CodeRabbit findings plus its own reviewed judgment, ordered by severity, with file/line references where possible.
+- The main agent must inspect the subagent findings, classify them, fix must-fix items, rerun affected checks, and record the review result.
+- If subagent tooling is unavailable, stop at a blocker. Do not present the work as ready for manual acceptance with main-agent-only review.
+- Never claim a subagent, CodeRabbit, or OpenCodeReview review ran unless it actually ran and its output was inspected.
 
-Install the OpenCodeReview skill separately from Easy Coding so agents can load its usage guidance:
+For `light` work, the subagent prompt can be compact. The subagent requirement still exists.
+
+## Subagent Review
+
+Minimum prompt shape:
+
+```text
+Review this diff for Easy Coding review-fix. Do not edit files.
+
+Scope: ...
+Repo/path: ...
+Base/head or committed/uncommitted state: ...
+Changed surfaces: ...
+Verification already run: ...
+Project completion rules: ...
+
+Use CodeRabbit local CLI if available/authenticated and suitable for the diff. Include the exact CodeRabbit command/result in your final note. If CodeRabbit cannot run, state why and still perform your own subagent review.
+
+Focus on correctness, false completion, accidental UI/copy changes, security/privacy, migration/data-loss/idempotency, stale docs, and missing verification.
+Return findings first, ordered by severity, with file/line references where possible. If there are no issues, say so clearly and note residual risk.
+```
+
+The required output is the subagent's reviewed judgment. Raw CodeRabbit output alone is not enough.
+
+## CodeRabbit Default Subagent Tool
+
+Prefer CodeRabbit as the local external review tool inside the required subagent review. It can review committed and uncommitted local diffs without requiring a PR.
+
+When the `coderabbit:code-review` skill is available and CodeRabbit is selected, load that skill for current command guidance before running the CLI.
+
+Preflight:
+
+```bash
+coderabbit --version
+coderabbit auth status --agent
+git status --short
+git diff --stat
+```
+
+If CodeRabbit was explicitly requested or the subagent decides to run it for review-fix, follow the `coderabbit:code-review` skill's setup and failure-handling rules, including `coderabbit auth login --agent` when authentication is missing. If CodeRabbit has not yet been selected and preflight shows it is unavailable/unauthenticated, or if the Git state is unsuitable for the target diff, record why and continue with the required subagent review. Do not claim a fallback review came from CodeRabbit.
+
+Common local scopes:
+
+```bash
+coderabbit review --agent
+coderabbit review --agent -t uncommitted
+coderabbit review --agent -t committed
+coderabbit review --agent --base main
+coderabbit review --agent --base-commit <sha>
+```
+
+If the repo has review context such as `AGENTS.md`, `.coderabbit.yaml`, or an accepted implementation plan, pass the relevant file(s) with CodeRabbit's context option when the CodeRabbit skill documents it.
+
+## OpenCodeReview Optional Support
+
+OpenCodeReview is optional. Use it for explicit owner requests, small targeted diffs, or fallback/supplemental cases where its runtime cost is acceptable.
+
+Install/setup when the owner chooses this path:
 
 ```bash
 npx skills add alibaba/open-code-review --skill open-code-review
-```
-
-Install the OCR CLI because Easy Coding's automatic pipeline invokes `ocr` directly:
-
-```bash
 npm install -g @alibaba-group/open-code-review
 ocr config provider
 ocr config model
 ocr llm test
 ```
 
-Optional Codex plugin installation provides a manual `@Open Code Review ...` entrypoint. It is not the automatic pipeline path:
-
-```bash
-codex plugin marketplace add alibaba/open-code-review
-```
-
-OCR requires its own LLM configuration. Environment variables or `~/.opencodereview/config.json` may supply the model endpoint and token.
-
-## Preflight
-
 Before running OCR, check:
 
 - `ocr` is on PATH.
 - `ocr llm test` succeeds, unless the owner explicitly accepts an offline/preflight-only run.
-- The review scope is explicit enough to avoid scanning unrelated generated files, local secrets, or env files.
-- The repo has a clean enough Git state to distinguish in-scope work from unrelated owner changes.
+- `ocr review --preview` shows a small enough scope to justify the runtime.
+- The repo Git state is clean enough to distinguish in-scope work from unrelated owner changes.
 
-Useful preflight commands:
+Useful scopes:
 
 ```bash
-ocr version
 ocr review --preview
 ocr review --commit <sha> --preview
 ocr review --from <base> --to <head> --preview
+ocr review --audience agent --commit <sha> --background "<context>"
+ocr review --audience agent --from <base> --to HEAD --background "<context>"
 ```
 
-## Review Scope
-
-Prefer precise scopes over bare workspace review.
-
-- For one committed acceptance candidate: `ocr review --audience agent --commit <sha> --background "<context>"`
-- For a feature branch: `ocr review --audience agent --from <base> --to HEAD --background "<context>"`
-- For current uncommitted work: `ocr review --audience agent --background "<context>"`, only after checking untracked files and secrets.
-
-Use `--format json` when the output needs parsing or when a report will be archived.
+If OCR is slow, noisy, misconfigured, rate-limited, or previews an unexpectedly broad scope, stop using it for that run and record why. The required subagent+CodeRabbit-default review path still remains.
 
 ## Findings
 
-Classify OCR findings before fixing:
+Classify all reviewer findings before fixing:
 
 - `must-fix`: correctness, security, privacy, migration/data-loss, permission, persistence, or clear regression risk.
 - `follow-up`: valid but outside the accepted batch or too risky for the current change window.
@@ -84,23 +117,14 @@ Classify OCR findings before fixing:
 
 After fixing must-fix findings, rerun affected verification. Old checks do not prove review-fix changes.
 
-## Fallbacks
-
-If OCR cannot run, record the reason and continue with the fallback chain:
-
-1. Independent subagent review when available.
-2. Main-agent checklist review.
-3. Affected verification rerun after any fixes.
-
-Do not block review-fix merely because OCR is missing, misconfigured, rate-limited, or unsuitable for the current scope. Do not hide the downgrade.
-
 ## Handoff Record
 
 Record review mode in the live plan/status document and acceptance handoff:
 
 ```text
-Review mode: OpenCodeReview via `ocr review --audience agent --from main --to HEAD --background "..."`
-OCR result: no must-fix findings / fixed N must-fix findings / unavailable because ...
-Fallback: independent subagent review used / main-agent checklist only because ...
+Review mode: required subagent review (<agent id/name>) using CodeRabbit via `...` / CodeRabbit unavailable because ...
+Subagent result: no must-fix findings / fixed N must-fix findings / deferred N follow-ups
+Optional extra tools: OpenCodeReview via `...` / none
+Main-agent final pass: completed
 Verification after review-fix: ...
 ```

@@ -15,7 +15,7 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 - After grill resolves the product decisions, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
 - At every internal stage boundary, run a pipeline checkpoint: name the stage just completed, consult the Agent-Owned Pipeline or live plan for the next required step, update visible plan/status when available, then continue. Do not rely on memory of the pipeline order.
 - Review-fix is mandatory, not optional. It must be a visible plan/status item before manual acceptance, and the handoff must state how review was performed. Do not wait for the owner to ask "did you review?" before inspecting the diff, fixing clear issues, and rerunning affected checks.
-- OpenCodeReview is the preferred default local CLI reviewer for review-fix when installed and configured. It is a recommended external prerequisite like Matt Pocock skills, not a hard runtime dependency; if it is unavailable, record the reason and use the fallback review chain.
+- Review-fix must include an independent subagent review before manual acceptance. The default reviewer is a subagent using CodeRabbit local CLI when available/authenticated; OpenCodeReview is optional support. CodeRabbit output run by the main agent does not replace the subagent review. If subagent tooling is unavailable, stop at a blocker instead of downgrading to main-agent-only review.
 - Before manual acceptance handoff, create a local checkpoint commit for the accepted candidate when repository rules allow commits. If commits are not allowed, explicitly say why and provide the exact uncommitted state. Do not leave a large completed batch only in the working tree before finish.
 - Internal checkpoints are resume markers, not stopping points. Do not final-answer after only drafting a spec, writing a plan, passing a build, updating docs, or finishing one phase.
 - Keep `Resolved Decisions` or the project’s live control document current when meaningful decisions, phase status, verification results, or stop conditions change.
@@ -55,7 +55,7 @@ After grill is complete, proceed autonomously unless a human gate appears:
 3. If explicit goal-mode execution was requested, create a concise goal prompt covering the whole pipeline: objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
 4. Implement in the active feature branch, respecting project branch/push/PR permissions.
 5. Verify real behavior, persistence, reload/reopen behavior, and integration paths relevant to the tier.
-6. Load `references/checklists.md`, review the diff, and fix clear issues before acceptance handoff.
+6. Load `references/checklists.md`, run the required independent subagent review using CodeRabbit when available, optionally add OpenCodeReview evidence, triage findings, and fix clear issues before acceptance handoff.
 7. Rerun the checks affected by review fixes. Old verification is not proof after review-fix changes.
 8. Commit the acceptance candidate locally when commits are permitted, so finish/PR work has a stable, searchable checkpoint. Keep docs in the same commit when they describe the same completed work unless the project separates source and docs.
 9. Hand off for manual acceptance with only delta information: what changed, what passed, what was not run, commit/checkpoint state, how to accept, and remaining risk.
@@ -70,7 +70,7 @@ Before asking the owner to manually accept, all boxes must be true:
 
 - Implementation is complete for the accepted scope, or unfinished pieces are explicitly out of scope/follow-up.
 - Relevant verification has passed or skipped checks are named with reasons.
-- The diff has been reviewed for false completion, accidental UI/copy changes, security/privacy leaks, migration hazards, stale docs, and obvious code-quality issues, and the review mode/tool used is recorded.
+- The diff has been reviewed by an independent subagent for false completion, accidental UI/copy changes, security/privacy leaks, migration hazards, stale docs, and obvious code-quality issues, and the subagent/tool mode used is recorded.
 - Clear review findings have been fixed and the affected checks rerun.
 - Current docs/status files match reality.
 - A local checkpoint commit exists for the acceptance candidate when commits are permitted; otherwise the handoff states why no commit exists.
@@ -90,7 +90,7 @@ If any box is false, keep working. Do not present the work as ready for acceptan
 Keep this file short. Load extra references only when their context pointer fires:
 
 - `references/checklists.md`: load before review-fix and acceptance handoff; also load for `heavy`, stale-roadmap work, security/data consistency risk, uncertain verification strategy, UI quality acceptance, local-stack/Docker handoff, or compact handoff formatting.
-- `references/review-tools.md`: load when choosing, installing, checking, or recording code-review tools; required before running or skipping OpenCodeReview.
+- `references/review-tools.md`: load when preparing the required subagent review, choosing optional CodeRabbit/OpenCodeReview support, or recording a review blocker.
 - `references/skill-map.md`: load when choosing among Easy Coding supporting skills.
 - `references/publishing.md`: load only when publishing, installing, or syncing the skill itself.
 

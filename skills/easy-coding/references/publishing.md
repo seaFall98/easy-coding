@@ -2,13 +2,13 @@
 
 ## Positioning
 
-`easy-coding` is a lightweight AI-driven feature delivery workflow that combines Matt Pocock skills, OpenCodeReview, and our own project practices.
+`easy-coding` is a lightweight AI-driven feature delivery workflow that combines Matt Pocock skills, local/agentic code review tools, and our own project practices.
 
 ## Packaging
 
 - Default installation includes only the easy-coding core skills in `skills/`.
 - Matt Pocock skills are external prerequisites installed from `mattpocock/skills`.
-- OpenCodeReview is an external prerequisite and the preferred default review-fix reviewer. Install its skill plus `ocr` CLI from `alibaba/open-code-review`; do not vendor it into this repository. The Codex plugin is optional because automatic Easy Coding review-fix invokes the CLI directly.
+- Subagent review is the mandatory Easy Coding review-fix reviewer role. CodeRabbit CLI is the default tool for that subagent when available/authenticated; OpenCodeReview is optional external support. Do not vendor either tool into this repository.
 - Keep the Matt Pocock snapshot under `vendor/` as non-installed attribution/reference material.
 - Do not duplicate external skill names in the default install set.
 - Keep attribution explicit in `ATTRIBUTION.md`.
