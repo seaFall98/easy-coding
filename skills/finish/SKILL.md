@@ -12,13 +12,15 @@ Complete the standard GitHub PR-based closure workflow for a feature branch.
 Before starting, verify:
 
 - The owner has confirmed manual acceptance.
-- All intended changes are committed.
+- All intended changes are committed in a local checkpoint commit that can be inspected later.
 - The working tree is clean.
 - The `gh` CLI is authenticated.
 - The current branch is a feature branch, not `main` or `master`.
 - The target base branch is known. Use `main` by default unless the repo or owner says otherwise.
 
-If any prerequisite fails, report what is missing and stop.
+If the only missing prerequisite is uncommitted in-scope accepted work, do not continue to PR steps. First inspect the diff, ensure docs/status are current, run or confirm relevant verification, and create the missing local checkpoint commit if repository rules allow it. If the repo/user has not allowed commits, stop and ask.
+
+If any other prerequisite fails, report what is missing and stop.
 
 ## Workflow
 
@@ -31,6 +33,13 @@ git status --short
 ```
 
 Stop if already on `main` or `master`.
+
+If `git status --short` is not clean:
+
+- Separate in-scope accepted work from unrelated owner changes.
+- For in-scope accepted work, finish the review-fix/docs/verification loop and commit it before proceeding.
+- For unrelated or ambiguous changes, stop and ask the owner how to handle them.
+- Do not stash, discard, or silently carry uncommitted changes into PR creation.
 
 ### 2. Fetch and sync the base branch
 
@@ -69,6 +78,8 @@ Integration can break previously passing work. Re-run the checks that cover the 
 Never reuse old verification results as proof after merging in new base-branch changes.
 
 If integration requires fixes, make them on the feature branch and commit them before pushing. The working tree must be clean before PR creation.
+
+Before pushing, run a final `git status --short` and `git log --oneline -3` check so the PR is anchored to committed, reviewable work.
 
 ### 5. Push the feature branch
 
@@ -142,7 +153,8 @@ Otherwise, look for agent instructions, docs indexes, roadmaps, status files, AD
 | Situation | Action |
 | --- | --- |
 | Already on main/master | Stop; nothing to close |
-| Uncommitted changes | Ask whether to commit or stash |
+| Uncommitted in-scope accepted work | Review, verify, update docs if needed, commit locally, then continue |
+| Uncommitted unrelated or ambiguous changes | Stop and ask whether to keep, commit separately, stash, or ignore |
 | Branch already pushed | Continue to PR creation |
 | PR already exists | Report existing URL |
 | `gh` unauthenticated | Ask owner to run `gh auth login` |

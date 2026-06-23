@@ -13,6 +13,8 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 - Keep the main path practical. Do not add process just to look disciplined; do not drop useful checks just to look fast.
 - Use only three normal owner-facing gates: grill, manual acceptance, and finish confirmation.
 - After grill resolves the product decisions, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
+- Review-fix is mandatory, not optional. Do not wait for the owner to ask "did you review?" before inspecting the diff, fixing clear issues, and rerunning affected checks.
+- Before manual acceptance handoff, create a local checkpoint commit for the accepted candidate when repository rules allow commits. If commits are not allowed, explicitly say why and provide the exact uncommitted state. Do not leave a large completed batch only in the working tree before finish.
 - Internal checkpoints are resume markers, not stopping points. Do not final-answer after only drafting a spec, writing a plan, passing a build, updating docs, or finishing one phase.
 - Keep `Resolved Decisions` or the project’s live control document current when meaningful decisions, phase status, verification results, or stop conditions change.
 - If a repo has not adopted the Easy Coding docs model, route to `setup-easy-coding`. If no accepted roadmap exists, route to `to-roadmap` after intake.
@@ -52,9 +54,24 @@ After grill is complete, proceed autonomously unless a human gate appears:
 4. Implement in the active feature branch, respecting project branch/push/PR permissions.
 5. Verify real behavior, persistence, reload/reopen behavior, and integration paths relevant to the tier.
 6. Review the diff and fix clear issues before acceptance handoff.
-7. Hand off for manual acceptance with only delta information: what changed, what passed, what was not run, how to accept, and remaining risk.
+7. Rerun the checks affected by review fixes. Old verification is not proof after review-fix changes.
+8. Commit the acceptance candidate locally when commits are permitted, so finish/PR work has a stable, searchable checkpoint. Keep docs in the same commit when they describe the same completed work unless the project separates source and docs.
+9. Hand off for manual acceptance with only delta information: what changed, what passed, what was not run, commit/checkpoint state, how to accept, and remaining risk.
 
 Large work may take multiple internal phases. Phase size is not a blocker; only missing authority, missing product decisions, or external failure states are blockers.
+
+## Acceptance Handoff Gate
+
+Before asking the owner to manually accept, all boxes must be true:
+
+- Implementation is complete for the accepted scope, or unfinished pieces are explicitly out of scope/follow-up.
+- Relevant verification has passed or skipped checks are named with reasons.
+- The diff has been reviewed for false completion, accidental UI/copy changes, security/privacy leaks, migration hazards, stale docs, and obvious code-quality issues.
+- Clear review findings have been fixed and the affected checks rerun.
+- Current docs/status files match reality.
+- A local checkpoint commit exists for the acceptance candidate when commits are permitted; otherwise the handoff states why no commit exists.
+
+If any box is false, keep working. Do not present the work as ready for acceptance.
 
 ## Verification Policy
 

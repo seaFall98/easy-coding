@@ -23,5 +23,5 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 - `npx skills add seaFall98/easy-coding --list` detects the 7 default core easy-coding skills from GitHub.
 - `npx skills add mattpocock/skills --list` detects the upstream Matt Pocock skills dependency.
 - Subagent packaging review found no stale `goal-plan-decomposer` or `finish-feature-dev` references after the rename.
-- No fresh-agent forward test has been run against `$easy-coding` yet.
+- ZBlog P5 exposed a real forward-test failure: the pipeline reached completion, but review-fix was not performed until the owner prompted, and the workflow did not make the pre-finish local checkpoint commit explicit enough. The `easy-coding`, checklist, and `finish` skills now include mandatory review-fix and checkpoint-commit gates; future fresh-agent tests should pressure these exact failure modes.
 - No ZBlog P4 dry run has been completed with the full setup -> grill -> spec -> goal-plan path.

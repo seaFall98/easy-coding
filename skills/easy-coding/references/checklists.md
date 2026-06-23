@@ -27,6 +27,8 @@ Before acceptance handoff, check the changed surfaces for these traps:
 - Security/privacy fields leaked through public APIs.
 - Docs or live plan still saying `next`, `pending`, or an old phase after completion.
 - Review comments answered with explanation but no code or test when code was needed.
+- Acceptance handoff prepared without a local checkpoint commit even though repository rules allow commits.
+- Review-fix changes made after verification without rerunning the affected checks.
 
 Fix findings in scope. If a finding is real but out of scope, name it as follow-up rather than hiding it.
 
@@ -45,6 +47,27 @@ For PR review fixes:
 - Security, privacy, permissions, token handling, data consistency, or migration issues need a regression test or a strong targeted verification.
 - Logic bugs need the smallest test that fails without the fix.
 - Minor config/copy/doc changes need the relevant parser/build/check, not a ceremonial full suite.
+
+## Review-Fix Loop
+
+Before manual acceptance handoff, and again after PR review comments:
+
+1. Inspect the actual diff, not just the remembered task.
+2. Classify findings as must-fix, follow-up, or non-issue.
+3. Fix must-fix items in scope.
+4. Rerun checks affected by those fixes.
+5. Record the verification result and remaining follow-ups in the live plan/status doc.
+
+Do not ask the owner to remind you to review. In Easy Coding, review-fix is agent-owned.
+
+## Checkpoint Commit Gate
+
+Before finish/PR work starts:
+
+- `git status --short` should be clean.
+- `git log --oneline -3` should show the acceptance-candidate commit.
+- If the repository allows commits and the completed work is still uncommitted, commit it before finish.
+- If unrelated owner changes are present, leave them alone and ask before touching them.
 
 ## UI Quality Acceptance
 
