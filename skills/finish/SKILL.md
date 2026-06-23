@@ -5,7 +5,9 @@ description: "Complete the development closure workflow for a feature branch. Us
 
 # Finish
 
-Complete the standard GitHub PR-based closure workflow for a feature branch.
+Complete the standard GitHub PR-based closure workflow for an already accepted feature branch.
+
+Finish is administrative closeout: sync docs/status, push the accepted branch, and create or report the PR. It is not another implementation, review, or verification phase.
 
 ## Prerequisites
 
@@ -18,9 +20,11 @@ Before starting, verify:
 - The current branch is a feature branch, not `main` or `master`.
 - The target base branch is known. Use `main` by default unless the repo or owner says otherwise.
 
-If the only missing prerequisite is uncommitted in-scope accepted work, do not continue to PR steps. First inspect the diff, ensure docs/status are current, run or confirm relevant verification, and create the missing local checkpoint commit if repository rules allow it. If the repo/user has not allowed commits, stop and ask.
+If there is uncommitted in-scope accepted work, stop and report that finish cannot continue from a moving target. The accepted checkpoint should already be committed before finish.
 
 If any other prerequisite fails, report what is missing and stop.
+
+Do not start a new review, run regression tests, or make code fixes in finish. Manual acceptance already validated the checkpoint. If finish reveals any need for code changes, stop and ask the owner how to proceed.
 
 ## Workflow
 
@@ -36,48 +40,36 @@ Stop if already on `main` or `master`.
 
 If `git status --short` is not clean:
 
-- Separate in-scope accepted work from unrelated owner changes.
-- For in-scope accepted work, finish the review-fix/docs/verification loop and commit it before proceeding.
-- For unrelated or ambiguous changes, stop and ask the owner how to handle them.
-- Do not stash, discard, or silently carry uncommitted changes into PR creation.
+- Stop and report the dirty files.
+- Do not review, fix, commit, stash, discard, or silently carry uncommitted changes into PR creation.
 
-### 2. Fetch and sync the base branch
+### 2. Sync docs
+
+Use the repository's documentation model to record the accepted/PR-ready state before opening the PR. If the project uses easy-coding default docs, update:
+
+- `docs/easy-roadmap.md`
+- `docs/current-work.md`
+- active `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`
+
+If the project adopted easy-coding with project-specific roadmap/status names, update the mapped files instead of creating duplicate defaults.
+
+Otherwise, look for agent instructions, docs indexes, roadmaps, status files, ADRs, and context files. Update only existing relevant docs unless the owner asked to create a new doc.
+
+If docs live inside the same source repo and require a commit, a docs-only finish commit is allowed when it records acceptance or PR state. Do not include code changes in that commit.
+
+### 3. Optional remote refresh
+
+Fetch remote refs only to avoid duplicate PRs and stale branch assumptions:
 
 ```bash
 git fetch origin --prune
-git switch <base-branch>
-git pull --ff-only origin <base-branch>
 ```
 
-If the base branch cannot fast-forward, stop and report the divergence. Do not force reset or rebase without explicit approval.
+Do not switch to the base branch, pull the base branch, merge base into the feature branch, rebase, or resolve conflicts during finish. Let the PR surface whether the branch is mergeable.
 
-### 3. Integrate the latest base branch locally
+### 4. Final branch check
 
-Return to the feature branch and integrate the current base branch before pushing or creating a PR:
-
-```bash
-git switch <feature-branch>
-git merge --no-edit origin/<base-branch>
-```
-
-Use merge by default because it does not rewrite branch history and is safer for shared feature branches. If the repository requires linear history, ask the owner before rebasing. Never force-push after a rebase unless the owner explicitly approves `--force-with-lease`.
-
-If conflicts occur:
-
-- Resolve them locally on the feature branch.
-- Keep conflict resolution in the feature branch commit history.
-- Re-run relevant verification after the conflict is resolved.
-- Stop and ask for help if the conflict requires product or architecture decisions.
-
-Do not open a PR while the feature branch is behind the base branch or has unresolved conflicts.
-
-### 4. Re-run relevant verification
-
-Integration can break previously passing work. Re-run the checks that cover the changed area, or clearly report why a check is skipped.
-
-Never reuse old verification results as proof after merging in new base-branch changes.
-
-If integration requires fixes, make them on the feature branch and commit them before pushing. The working tree must be clean before PR creation.
+Do not rerun review or regression tests in finish. Only confirm the branch is still the accepted clean checkpoint.
 
 Before pushing, run a final `git status --short` and `git log --oneline -3` check so the PR is anchored to committed, reviewable work.
 
@@ -94,18 +86,17 @@ git fetch origin <feature-branch>
 git log --oneline --left-right HEAD...origin/<feature-branch>
 ```
 
-Merge the remote feature branch locally or ask the owner what to do if the divergence is not obviously safe.
+Stop and ask the owner what to do if the divergence is not obviously safe. Do not force-push by default.
 
 ### 6. Build PR title and body
 
-Use real branch commits and real verification data.
+Use real branch commits and the verification/manual acceptance data already produced before finish.
 
 PR body should include:
 
 - Summary
 - Key changes
-- Verification actually run
-- Skipped verification and why
+- Verification already run before finish
 - Manual acceptance note
 
 Never fabricate test results.
@@ -136,30 +127,18 @@ git branch -d <feature-branch>
 
 Ask before deleting the remote branch.
 
-### 10. Sync docs
-
-Use the repository's documentation model. If the project uses easy-coding default docs, update:
-
-- `docs/easy-roadmap.md`
-- `docs/current-work.md`
-- active `docs/batch/batchN-feature-name/IMPLEMENTATION_PLAN.md`
-
-If the project adopted easy-coding with project-specific roadmap/status names, update the mapped files instead of creating duplicate defaults.
-
-Otherwise, look for agent instructions, docs indexes, roadmaps, status files, ADRs, and context files. Update only existing relevant docs unless the owner asked to create a new doc.
-
 ## Edge Cases
 
 | Situation | Action |
 | --- | --- |
 | Already on main/master | Stop; nothing to close |
-| Uncommitted in-scope accepted work | Review, verify, update docs if needed, commit locally, then continue |
-| Uncommitted unrelated or ambiguous changes | Stop and ask whether to keep, commit separately, stash, or ignore |
+| Uncommitted in-scope accepted work | Stop; accepted work must already be checkpoint-committed before finish |
+| Uncommitted unrelated or ambiguous changes | Stop and ask whether to clean them up before finish |
 | Branch already pushed | Continue to PR creation |
 | PR already exists | Report existing URL |
 | `gh` unauthenticated | Ask owner to run `gh auth login` |
-| Base branch cannot fast-forward | Stop and report conflict/divergence |
-| Feature conflicts with base | Resolve locally on feature branch, re-run verification, then push |
+| Base branch moved | Still create/report PR unless the owner asked to pre-integrate; let PR show mergeability |
+| Feature conflicts with base | Report the PR conflict state; do not resolve in finish mode |
 | Push rejected because remote branch advanced | Fetch, inspect divergence, and do not force-push by default |
 | Linear history required | Ask before rebase; never force-push without explicit approval |
 | No docs system | Skip docs sync |

@@ -81,7 +81,7 @@ Owners normally participate in only three gates:
 
 1. Grill: clarify requirements and decisions.
 2. Manual acceptance: verify the delivered behavior.
-3. Finish confirmation: allow docs sync and branch closeout.
+3. Finish confirmation: allow docs sync and PR closeout.
 
 Spec draft, planning, implementation, verification, and review-fix are agent-owned after grill unless a blocking product decision appears.
 
@@ -92,6 +92,10 @@ Internal checkpoints are not owner gates. After grill, the agent should not stop
 Review-fix is mandatory before manual acceptance. Easy Coding requires an independent subagent review of the actual diff. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
 
 Review-fix normally reviews the current uncommitted/staged working diff before the checkpoint commit. That does not conflict with requiring a commit before manual acceptance: the order is review, fix, rerun affected checks, then create the local checkpoint commit. OpenCodeReview is optional supporting evidence, but it does not replace the required subagent reviewer.
+
+## Finish
+
+Finish is intentionally lightweight. After manual acceptance, the agent should only sync docs/status, push the accepted branch, and create or report the PR. It must not start another review, rerun regressions, or make extra fixes during finish.
 
 ## Goal Mode
 

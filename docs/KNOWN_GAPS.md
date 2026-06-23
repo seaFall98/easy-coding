@@ -24,4 +24,5 @@ These are known follow-ups for `easy-coding` after the initial bootstrap.
 - `npx skills add mattpocock/skills --list` detects the upstream Matt Pocock skills dependency.
 - Subagent packaging review found no stale `goal-plan-decomposer` or `finish-feature-dev` references after the rename.
 - ZBlog P5 exposed a real forward-test failure: the pipeline reached completion, but review-fix was not performed until the owner prompted, and the workflow did not make the pre-finish local checkpoint commit explicit enough. The `easy-coding`, checklist, and `finish` skills now include mandatory review-fix and checkpoint-commit gates; future fresh-agent tests should pressure these exact failure modes.
+- ZBlog Batch7 exposed a second real forward-test failure: after manual acceptance and checkpoint commit, finish still triggered an extra subagent review and regression run. `finish` is now defined as docs/status sync plus push/PR closeout only; no new review, regression tests, or code fixes should run during finish.
 - No ZBlog P4 dry run has been completed with the full setup -> grill -> spec -> goal-plan path.

@@ -98,8 +98,11 @@ Keep this file short. Load extra references only when their context pointer fire
 
 When the owner confirms finish:
 
+- Finish is administrative closeout for an already accepted checkpoint. It is not another implementation, review, or verification phase.
 - Sync current docs and roadmap status without duplicating content already available in those docs.
-- Use the repository’s finish workflow for branch, PR, merge, cleanup, and final state.
+- Use the repository's finish workflow for branch, PR, merge, cleanup, and final state.
+- Do not run new review, regression tests, or extra fixes during finish. Manual acceptance already validated the checkpoint.
+- If finish discovers a dirty worktree, conflict, unexpected branch divergence, or any need for code changes, stop and report the blocker instead of continuing the pipeline.
 - Do not push, create a PR, merge, deploy, or delete important content unless the project/user permission boundary allows it.
 
 ## Output Style

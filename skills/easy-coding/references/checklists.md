@@ -83,7 +83,9 @@ Before finish/PR work starts:
 
 - `git status --short` should be clean.
 - `git log --oneline -3` should show the acceptance-candidate commit.
-- If the repository allows commits and the completed work is still uncommitted, commit it before finish.
+- Completed code work must already be checkpoint-committed before finish.
+- If code work is still uncommitted, stop; do not review, test, fix, or commit it during finish.
+- If finish only needs docs/status updates, a docs-only finish commit is acceptable when the repo and owner allow it.
 - If unrelated owner changes are present, leave them alone and ask before touching them.
 
 ## UI Quality Acceptance
