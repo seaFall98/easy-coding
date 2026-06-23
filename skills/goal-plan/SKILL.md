@@ -58,6 +58,7 @@ The plan should include:
 - Definition of done:
 - Local verification:
 - Phase review:
+- Review-fix:
 - Commit/checkpoint:
 
 ## Delegation Rules
@@ -112,6 +113,7 @@ A good phase usually has:
 - one owner for integration
 - local verification that can run immediately
 - a short phase review before moving on
+- an explicit review-fix item before checkpoint or acceptance
 
 Typical order:
 1. foundations and contracts
@@ -163,6 +165,7 @@ After each implementation phase, include a lighter review:
 - run targeted checks
 - inspect the diff for scope creep
 - decide whether to continue, patch, or ask the owner
+- record the review mode used: main-agent review, project/local code-review skill, external/plugin reviewer, or independent subagent
 
 ## Verification Matrix
 

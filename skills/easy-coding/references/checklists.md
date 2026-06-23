@@ -53,10 +53,23 @@ For PR review fixes:
 Before manual acceptance handoff, and again after PR review comments:
 
 1. Inspect the actual diff, not just the remembered task.
-2. Classify findings as must-fix, follow-up, or non-issue.
-3. Fix must-fix items in scope.
-4. Rerun checks affected by those fixes.
-5. Record the verification result and remaining follow-ups in the live plan/status doc.
+2. Choose and record the review mode:
+   - Default: main-agent diff review using this checklist.
+   - Use a project/local code-review skill when one is explicitly named by the owner or available and appropriate for the changed stack.
+   - Use an external/plugin reviewer only when the owner explicitly requests it, the repository workflow requires it, or the tool is already part of the current branch workflow. Do not invent a plugin dependency just to satisfy review-fix.
+   - For `heavy` work, risky migrations/security/privacy changes, or broad multi-surface diffs, prefer an independent reviewer pass when tools/subagents are available; otherwise record why main-agent review was used.
+3. Review changed files and nearby contracts for:
+   - false completion and placeholders
+   - accidental public UI/copy/layout changes
+   - security/privacy or secret leakage
+   - migration/data-loss/idempotency hazards
+   - stale docs/status
+   - missing or weak tests for changed behavior
+   - obvious code-quality and maintainability issues
+4. Classify findings as must-fix, follow-up, or non-issue.
+5. Fix must-fix items in scope.
+6. Rerun checks affected by those fixes.
+7. Record the review mode, fixes, verification result, and remaining follow-ups in the live plan/status doc.
 
 Do not ask the owner to remind you to review. In Easy Coding, review-fix is agent-owned.
 
