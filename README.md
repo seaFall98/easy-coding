@@ -6,9 +6,9 @@ It provides one entry skill, `$easy-coding`, that routes a complex web/full-stac
 
 ## Positioning
 
-This project blends Matt Pocock skills, local/agentic code review tools, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
+This project blends Matt Pocock skills, required subagent review, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
 
-Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. External review tools such as CodeRabbit CLI or OpenCodeReview are configured separately and selected by the review policy.
+Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. External review tools such as OpenCodeReview are optional and configured separately.
 
 ## Install
 
@@ -17,19 +17,14 @@ Prerequisites:
 - `npx skills` available in your agent environment
 - Matt Pocock skills installed separately
 - Subagent tooling available in the agent environment for mandatory review-fix
-- CodeRabbit CLI/auth for the default subagent review tool
 - OpenCodeReview skill and `ocr` CLI only when you want the optional OCR review path
 - `git` for branch workflows
 - authenticated `gh` CLI when using `$finish` with GitHub PRs
 
-Install Matt Pocock skills and the default CodeRabbit review tool first, then install easy-coding core skills:
+Install Matt Pocock skills first, then install easy-coding core skills:
 
 ```bash
 npx skills add mattpocock/skills --all
-curl -fsSL https://cli.coderabbit.ai/install.sh | sh
-coderabbit --version
-coderabbit auth login --agent
-coderabbit auth status --agent
 npx skills add seaFall98/easy-coding --all
 ```
 
@@ -94,9 +89,9 @@ Internal checkpoints are not owner gates. After grill, the agent should not stop
 
 ## Review-Fix
 
-Review-fix is mandatory before manual acceptance. Easy Coding requires an independent subagent review of the actual diff; by default that subagent uses CodeRabbit local CLI when available/authenticated. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
+Review-fix is mandatory before manual acceptance. Easy Coding requires an independent subagent review of the actual diff. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
 
-OpenCodeReview is optional supporting evidence. CodeRabbit output from the main agent alone does not replace the required subagent reviewer. The subagent should report CodeRabbit findings plus its own judgment; the main agent owns triage, fixes, verification reruns, and the final review record.
+Review-fix normally reviews the current uncommitted/staged working diff before the checkpoint commit. That does not conflict with requiring a commit before manual acceptance: the order is review, fix, rerun affected checks, then create the local checkpoint commit. OpenCodeReview is optional supporting evidence, but it does not replace the required subagent reviewer.
 
 ## Goal Mode
 

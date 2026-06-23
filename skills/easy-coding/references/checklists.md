@@ -27,7 +27,7 @@ Before acceptance handoff, check the changed surfaces for these traps:
 - Security/privacy fields leaked through public APIs.
 - Docs or live plan still saying `next`, `pending`, or an old phase after completion.
 - Review comments answered with explanation but no code or test when code was needed.
-- Acceptance handoff prepared without a local checkpoint commit even though repository rules allow commits.
+- Acceptance handoff prepared without review-fix and the following local checkpoint commit even though repository rules allow commits.
 - Review-fix changes made after verification without rerunning the affected checks.
 
 Fix findings in scope. If a finding is real but out of scope, name it as follow-up rather than hiding it.
@@ -55,9 +55,10 @@ Before manual acceptance handoff, and again after PR review comments:
 1. Inspect the actual diff, not just the remembered task.
 2. Choose and record the review mode:
    - The main agent owns the review-fix outcome: inspect the diff, spawn/request the subagent review, triage findings, apply fixes, rerun checks, and record what happened.
-   - Load `review-tools.md` before preparing the required subagent review, running CodeRabbit/OpenCodeReview, or recording a review blocker.
+   - Load `review-tools.md` before preparing the required subagent review, running optional OpenCodeReview, or recording a review blocker.
    - A subagent review is mandatory before manual acceptance. Main-agent checklist-only review is not an acceptable Easy Coding review-fix result.
-   - The default review path is a subagent using CodeRabbit local CLI. The subagent must summarize CodeRabbit findings and add its own judgment; raw tool output alone is not enough.
+   - The default review target is the current pre-checkpoint diff, including staged, unstaged, and untracked in-scope files. Review-fix happens before the checkpoint commit.
+   - The subagent must provide its own reviewed judgment; raw tool output alone is not enough.
    - OpenCodeReview may support the review when selected, but it does not replace the subagent reviewer.
    - If subagent tooling is unavailable, stop at a blocker and explain what is missing. Do not downgrade to main-agent-only review.
    - Use PR/cloud reviewers only when the owner explicitly requests them, the repository workflow requires them, or a PR workflow is already active; they are still supplemental to the subagent review unless the owner changes this policy.

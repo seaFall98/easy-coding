@@ -165,7 +165,9 @@ After each implementation phase, include a lighter review:
 - run targeted checks
 - inspect the diff for scope creep
 - decide whether to continue, patch, or ask the owner
-- record the review mode used: main-agent review, project/local code-review skill, external/plugin reviewer, or independent subagent
+- record any phase self-checks separately from review-fix
+
+The review-fix item before checkpoint or acceptance must be the Easy Coding mandatory independent subagent review. Main-agent self-review, project/local code-review skills, and external/plugin reviewers can support the phase review, but they do not satisfy final review-fix without the subagent review.
 
 ## Verification Matrix
 

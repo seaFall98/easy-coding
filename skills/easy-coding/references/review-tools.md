@@ -7,21 +7,37 @@ Load this reference when preparing, running, or recording Easy Coding review-fix
 Review-fix has two mandatory roles:
 
 1. An independent subagent reviewer.
-2. The main agent as integrator, triager, fixer, and recorder.
+2. The main agent as integrator, triager, fixer, verifier, and recorder.
 
-CodeRabbit is the default tool the subagent should use for code review when available/authenticated. OpenCodeReview, PR reviewers, and main-agent checklist review are supporting signals. They do not replace the subagent reviewer.
+The default reviewer is a native subagent reviewing the current pre-commit diff. External tools are optional supporting evidence. They do not replace the subagent reviewer.
 
 Non-negotiables:
 
 - Before manual acceptance, spawn/request a subagent review of the actual diff.
-- Ask the subagent to use CodeRabbit local CLI when it is available/authenticated and suitable for the diff.
+- Review happens before the checkpoint commit. After fixing findings and rerunning affected checks, create the checkpoint commit.
 - Give the subagent the accepted scope, changed files, branch/base, relevant docs, verification already run, and project completion rules.
-- Ask the subagent for CodeRabbit findings plus its own reviewed judgment, ordered by severity, with file/line references where possible.
+- Ask the subagent for its own reviewed judgment, ordered by severity, with file/line references where possible.
 - The main agent must inspect the subagent findings, classify them, fix must-fix items, rerun affected checks, and record the review result.
 - If subagent tooling is unavailable, stop at a blocker. Do not present the work as ready for manual acceptance with main-agent-only review.
-- Never claim a subagent, CodeRabbit, or OpenCodeReview review ran unless it actually ran and its output was inspected.
+- Never claim a subagent or OpenCodeReview review ran unless it actually ran and its output was inspected.
 
 For `light` work, the subagent prompt can be compact. The subagent requirement still exists.
+
+## Review Scope
+
+Default to the pre-checkpoint working tree because it lets review fixes land before the acceptance-candidate commit:
+
+```bash
+git status --short
+git diff --stat
+git diff
+git diff --cached
+git ls-files --others --exclude-standard
+```
+
+Untracked in-scope files must be reviewable by content, not only by filename. Either mark them with `git add -N` before producing the diff, or include line-numbered file reads in the subagent prompt.
+
+If the work is already committed for a project-specific reason, ask the subagent to review the candidate commit or branch range instead, and record that exception.
 
 ## Subagent Review
 
@@ -32,51 +48,20 @@ Review this diff for Easy Coding review-fix. Do not edit files.
 
 Scope: ...
 Repo/path: ...
-Base/head or committed/uncommitted state: ...
+Review target: current pre-checkpoint diff / commit <sha> / range <base>..<head>
 Changed surfaces: ...
 Verification already run: ...
 Project completion rules: ...
 
-Use CodeRabbit local CLI if available/authenticated and suitable for the diff. Include the exact CodeRabbit command/result in your final note. If CodeRabbit cannot run, state why and still perform your own subagent review.
-
-Focus on correctness, false completion, accidental UI/copy changes, security/privacy, migration/data-loss/idempotency, stale docs, and missing verification.
+Review staged, unstaged, and untracked in-scope files. Focus on correctness, false completion, accidental UI/copy changes, security/privacy, migration/data-loss/idempotency, stale docs, and missing verification.
 Return findings first, ordered by severity, with file/line references where possible. If there are no issues, say so clearly and note residual risk.
 ```
 
-The required output is the subagent's reviewed judgment. Raw CodeRabbit output alone is not enough.
+The required output is the subagent's reviewed judgment. Raw external-tool output alone is not enough.
 
-## CodeRabbit Default Subagent Tool
+## Optional OpenCodeReview Support
 
-Prefer CodeRabbit as the local external review tool inside the required subagent review. It can review committed and uncommitted local diffs without requiring a PR.
-
-When the `coderabbit:code-review` skill is available and CodeRabbit is selected, load that skill for current command guidance before running the CLI.
-
-Preflight:
-
-```bash
-coderabbit --version
-coderabbit auth status --agent
-git status --short
-git diff --stat
-```
-
-If CodeRabbit was explicitly requested or the subagent decides to run it for review-fix, follow the `coderabbit:code-review` skill's setup and failure-handling rules, including `coderabbit auth login --agent` when authentication is missing. If CodeRabbit has not yet been selected and preflight shows it is unavailable/unauthenticated, or if the Git state is unsuitable for the target diff, record why and continue with the required subagent review. Do not claim a fallback review came from CodeRabbit.
-
-Common local scopes:
-
-```bash
-coderabbit review --agent
-coderabbit review --agent -t uncommitted
-coderabbit review --agent -t committed
-coderabbit review --agent --base main
-coderabbit review --agent --base-commit <sha>
-```
-
-If the repo has review context such as `AGENTS.md`, `.coderabbit.yaml`, or an accepted implementation plan, pass the relevant file(s) with CodeRabbit's context option when the CodeRabbit skill documents it.
-
-## OpenCodeReview Optional Support
-
-OpenCodeReview is optional. Use it for explicit owner requests, small targeted diffs, or fallback/supplemental cases where its runtime cost is acceptable.
+OpenCodeReview is optional. Use it only for explicit owner requests, small targeted diffs, or supplemental cases where its runtime cost is acceptable.
 
 Install/setup when the owner chooses this path:
 
@@ -105,7 +90,7 @@ ocr review --audience agent --commit <sha> --background "<context>"
 ocr review --audience agent --from <base> --to HEAD --background "<context>"
 ```
 
-If OCR is slow, noisy, misconfigured, rate-limited, or previews an unexpectedly broad scope, stop using it for that run and record why. The required subagent+CodeRabbit-default review path still remains.
+If OCR is slow, noisy, misconfigured, rate-limited, or previews an unexpectedly broad scope, stop using it for that run and record why. The required subagent review still remains.
 
 ## Findings
 
@@ -122,9 +107,10 @@ After fixing must-fix findings, rerun affected verification. Old checks do not p
 Record review mode in the live plan/status document and acceptance handoff:
 
 ```text
-Review mode: required subagent review (<agent id/name>) using CodeRabbit via `...` / CodeRabbit unavailable because ...
+Review mode: required subagent review (<agent id/name>)
+Review target: pre-checkpoint working diff / commit <sha> / range <base>..<head>
 Subagent result: no must-fix findings / fixed N must-fix findings / deferred N follow-ups
 Optional extra tools: OpenCodeReview via `...` / none
-Main-agent final pass: completed
 Verification after review-fix: ...
+Checkpoint commit after review-fix: <sha> / not created because ...
 ```

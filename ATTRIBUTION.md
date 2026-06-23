@@ -32,16 +32,10 @@ This repository is independently maintained and does not automatically sync upst
 
 ## OpenCodeReview
 
-OpenCodeReview is an optional external review-fix reviewer. It is installed separately and is not vendored in this repository.
+OpenCodeReview is an optional external review-fix support tool. It is installed separately and is not vendored in this repository.
 
 - Repository: https://github.com/alibaba/open-code-review
 - License: Apache-2.0
-
-## CodeRabbit
-
-CodeRabbit CLI is the default external tool for the required Easy Coding subagent review when installed/authenticated. It is installed separately and is not vendored in this repository.
-
-- Website: https://www.coderabbit.ai/
 
 ## Easy Coding Core Skills
 
