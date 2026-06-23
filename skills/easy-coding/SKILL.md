@@ -15,6 +15,7 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 - After grill resolves the product decisions, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
 - At every internal stage boundary, run a pipeline checkpoint: name the stage just completed, consult the Agent-Owned Pipeline or live plan for the next required step, update visible plan/status when available, then continue. Do not rely on memory of the pipeline order.
 - Review-fix is mandatory, not optional. It must be a visible plan/status item before manual acceptance, and the handoff must state how review was performed. Do not wait for the owner to ask "did you review?" before inspecting the diff, fixing clear issues, and rerunning affected checks.
+- OpenCodeReview is the preferred default local CLI reviewer for review-fix when installed and configured. It is a recommended external prerequisite like Matt Pocock skills, not a hard runtime dependency; if it is unavailable, record the reason and use the fallback review chain.
 - Before manual acceptance handoff, create a local checkpoint commit for the accepted candidate when repository rules allow commits. If commits are not allowed, explicitly say why and provide the exact uncommitted state. Do not leave a large completed batch only in the working tree before finish.
 - Internal checkpoints are resume markers, not stopping points. Do not final-answer after only drafting a spec, writing a plan, passing a build, updating docs, or finishing one phase.
 - Keep `Resolved Decisions` or the project’s live control document current when meaningful decisions, phase status, verification results, or stop conditions change.
@@ -89,6 +90,7 @@ If any box is false, keep working. Do not present the work as ready for acceptan
 Keep this file short. Load extra references only when their context pointer fires:
 
 - `references/checklists.md`: load before review-fix and acceptance handoff; also load for `heavy`, stale-roadmap work, security/data consistency risk, uncertain verification strategy, UI quality acceptance, local-stack/Docker handoff, or compact handoff formatting.
+- `references/review-tools.md`: load when choosing, installing, checking, or recording code-review tools; required before running or skipping OpenCodeReview.
 - `references/skill-map.md`: load when choosing among Easy Coding supporting skills.
 - `references/publishing.md`: load only when publishing, installing, or syncing the skill itself.
 

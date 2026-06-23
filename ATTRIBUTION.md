@@ -30,6 +30,13 @@ Snapshot skills:
 
 This repository is independently maintained and does not automatically sync upstream changes.
 
+## OpenCodeReview
+
+OpenCodeReview is a recommended external prerequisite and preferred default review-fix reviewer. It is installed separately and is not vendored in this repository.
+
+- Repository: https://github.com/alibaba/open-code-review
+- License: Apache-2.0
+
 ## Easy Coding Core Skills
 
 - `easy-coding`

@@ -54,9 +54,11 @@ Before manual acceptance handoff, and again after PR review comments:
 
 1. Inspect the actual diff, not just the remembered task.
 2. Choose and record the review mode:
-   - Default: main-agent diff review using this checklist.
+   - Main-agent diff review using this checklist is mandatory.
+   - Load `review-tools.md` before running or skipping OpenCodeReview.
+   - Prefer OpenCodeReview when installed, configured, and safe for the current diff.
    - Use a project/local code-review skill when one is explicitly named by the owner or available and appropriate for the changed stack.
-   - Use an external/plugin reviewer only when the owner explicitly requests it, the repository workflow requires it, or the tool is already part of the current branch workflow. Do not invent a plugin dependency just to satisfy review-fix.
+   - Use other external/plugin reviewers only when the owner explicitly requests them, the repository workflow requires them, or the tool is already part of the current branch workflow. Do not invent a plugin dependency just to satisfy review-fix.
    - For `heavy` work, risky migrations/security/privacy changes, or broad multi-surface diffs, prefer an independent reviewer pass when tools/subagents are available; otherwise record why main-agent review was used.
 3. Review changed files and nearby contracts for:
    - false completion and placeholders

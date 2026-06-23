@@ -6,9 +6,9 @@ It provides one entry skill, `$easy-coding`, that routes a complex web/full-stac
 
 ## Positioning
 
-This project blends Matt Pocock skills with practical AI coding workflow patterns from real feature development. It is not a fork of Matt Pocock skills and does not promise upstream sync.
+This project blends Matt Pocock skills, OpenCodeReview, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
 
-Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names.
+Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. OpenCodeReview is also installed separately and used as the preferred default code-review tool when available.
 
 ## Install
 
@@ -16,13 +16,19 @@ Prerequisites:
 
 - `npx skills` available in your agent environment
 - Matt Pocock skills installed separately
+- OpenCodeReview skill and `ocr` CLI installed separately for default automatic review-fix
 - `git` for branch workflows
 - authenticated `gh` CLI when using `$finish` with GitHub PRs
 
-Install Matt Pocock skills first, then install easy-coding core skills:
+Install Matt Pocock skills and OpenCodeReview first, then install easy-coding core skills:
 
 ```bash
 npx skills add mattpocock/skills --all
+npx skills add alibaba/open-code-review --skill open-code-review
+npm install -g @alibaba-group/open-code-review
+ocr config provider
+ocr config model
+ocr llm test
 npx skills add seaFall98/easy-coding --all
 ```
 
@@ -74,6 +80,12 @@ Owners normally participate in only three gates:
 Spec draft, planning, implementation, verification, and review-fix are agent-owned after grill unless a blocking product decision appears.
 
 Internal checkpoints are not owner gates. After grill, the agent should not stop merely because it wrote a spec, wrote a plan, completed a phase, passed a build, or updated docs. Those are commentary/status updates; the next normal owner-facing stop is the manual acceptance handoff.
+
+## Review-Fix
+
+OpenCodeReview is the preferred default reviewer for review-fix when installed and configured. Easy Coding invokes the `ocr` CLI directly during the agent-owned pipeline; the owner should not need to type a slash command or `@Open Code Review` for normal batch work.
+
+Install the OpenCodeReview skill for agent guidance and the `ocr` CLI for execution. The Codex plugin is optional for manual invocation, not required for automatic Easy Coding review-fix. Easy Coding still requires a main-agent checklist pass and records the actual review mode used. If OCR is unavailable, the pipeline downgrades to an independent subagent review when possible, then main-agent checklist review, and records the reason.
 
 ## Goal Mode
 
