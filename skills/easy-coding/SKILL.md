@@ -11,8 +11,10 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 
 - Tiers are `light`, `standard`, and `heavy`. Accept legacy aliases `a-light`, `aa-standard`, and `aaa-heavy`, but use the short names in owner-facing examples.
 - Keep the main path practical. Do not add process just to look disciplined; do not drop useful checks just to look fast.
-- Use only three normal owner-facing gates: grill, manual acceptance, and finish confirmation.
-- After grill resolves the product decisions, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
+- Use four normal owner-facing gates: grill, post-grill goal-mode opt-in, manual acceptance, and finish confirmation.
+- After grill resolves the product decisions, stop at the post-grill owner gate unless the owner has already explicitly requested goal-mode pipeline execution. Tell the owner the grill is complete and ask them to explicitly request goal mode to complete the pipeline.
+- Once the owner explicitly requests goal-mode pipeline execution, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
+- The post-grill goal-mode opt-in is an entry gate only. Do not add owner gates inside downstream pipeline skills such as `write-spec` or `goal-plan`; they are internal pipeline steps once goal mode is authorized.
 - At every internal stage boundary, run a pipeline checkpoint: name the stage just completed, consult the Agent-Owned Pipeline or live plan for the next required step, update visible plan/status when available, then continue. Do not rely on memory of the pipeline order.
 - Review-fix is mandatory once after implementation is complete and before manual acceptance. It must be a visible plan/status item, must use `review-fix`, and must write/update `REVIEW.md`. Do not run review after every subtask by default.
 - Review-fix must include an independent native subagent review before manual acceptance. Optional external tools such as OpenCodeReview are supporting evidence only. If subagent tooling is unavailable, stop at a blocker instead of downgrading to main-agent-only review.
@@ -21,8 +23,8 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 - Keep `Resolved Decisions` or the project’s live control document current when meaningful decisions, phase status, verification results, or stop conditions change.
 - If a repo has not adopted the Easy Coding docs model, route to `setup-easy-coding`. If no accepted roadmap exists, route to `to-roadmap` after intake.
 - If roadmap items look stale, audit them before building. Classify each relevant item as keep, already done, rewrite, future, or drop.
-- Use goal mode only when the owner explicitly asks for `/goal`, `goal mode`, `create a goal`, `创建 goal`, `完成Pipeline`, or equivalent. If requested and tooling exists, create the goal yourself after spec/plan; otherwise continue the same pipeline without asking the owner to run `/goal`.
-- Before ending a turn, run the stop-condition check: final answer only for a blocker, a real human gate, acceptance handoff, or finish report.
+- Use goal mode only when the owner explicitly asks for `/goal`, `goal mode`, `create a goal`, `创建 goal`, `完成Pipeline`, or equivalent. If requested and tooling exists, create the goal yourself. If requested but tooling is unavailable, stop at a blocker. If not requested, stop at the post-grill owner gate and ask for explicit goal-mode authorization.
+- Before ending a turn, run the stop-condition check: final answer only for a blocker, the post-grill goal-mode opt-in gate, another real human gate, acceptance handoff, or finish report.
 
 ## Tier Router
 
@@ -49,11 +51,11 @@ When a supporting skill fits, use it; do not reimplement it inside Easy Coding.
 
 ## Agent-Owned Pipeline
 
-After grill is complete, proceed autonomously unless a human gate appears:
+Run this pipeline only after the owner explicitly requests goal-mode pipeline execution. If grill just completed and goal mode was not explicitly requested, stop and tell the owner: "grill is complete; please explicitly request goal mode to complete the pipeline." After goal mode is authorized, do not stop at spec or plan checkpoints unless a real blocker appears; `write-spec` and `goal-plan` are internal pipeline steps.
 
-1. Draft or update the spec from confirmed decisions, repo context, accepted research, and explicit assumptions.
-2. Create or update the implementation plan. Split by behavior and dependency, not by file list.
-3. If explicit goal-mode execution was requested, create a concise goal prompt covering the whole pipeline: objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
+1. If goal tooling exists, create a concise goal covering the whole pipeline: objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
+2. Draft or update the spec from confirmed decisions, repo context, accepted research, and explicit assumptions.
+3. Create or update the implementation plan. Split by behavior and dependency, not by file list.
 4. Implement in the active feature branch, respecting project branch/push/PR permissions.
 5. Verify real behavior, persistence, reload/reopen behavior, and integration paths relevant to the tier.
 6. Use `review-fix`: run the required independent subagent review of the current pre-checkpoint diff or candidate range, write/update `REVIEW.md`, triage findings, and fix clear issues before acceptance handoff.

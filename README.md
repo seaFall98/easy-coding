@@ -77,15 +77,16 @@ Each feature creates its own `docs/batch/batchN-feature-name/` directory with `S
 
 ## Owner Gates
 
-Owners normally participate in only three gates:
+Owners normally participate in four gates:
 
 1. Grill: clarify requirements and decisions.
-2. Manual acceptance: verify the delivered behavior.
-3. Finish confirmation: allow docs sync and PR closeout.
+2. Post-grill goal-mode opt-in: explicitly ask Codex to complete the pipeline.
+3. Manual acceptance: verify the delivered behavior.
+4. Finish confirmation: allow docs sync and PR closeout.
 
-Spec draft, planning, implementation, verification, and review-fix are agent-owned after grill unless a blocking product decision appears.
+After grill, Codex must stop and say the grill is complete unless the owner has already explicitly requested goal-mode pipeline execution. Spec draft, planning, implementation, verification, and review-fix are agent-owned only after that explicit goal-mode opt-in, unless a blocking product decision appears.
 
-Internal checkpoints are not owner gates. After grill, the agent should not stop merely because it wrote a spec, wrote a plan, completed a phase, passed a build, or updated docs. Those are commentary/status updates; the next normal owner-facing stop is the manual acceptance handoff.
+Internal checkpoints are not owner gates once goal-mode pipeline execution has been explicitly requested. After that opt-in, the agent should not stop merely because it wrote a spec, wrote a plan, completed a phase, passed a build, or updated docs. Those are commentary/status updates; the next normal owner-facing stop is the manual acceptance handoff.
 
 ## Review-Fix
 
@@ -109,7 +110,7 @@ $easy-coding heavy goal-mode ...
 $easy-coding heavy create a goal after grill and complete the internal pipeline ...
 ```
 
-When goal-mode is explicitly requested, the agent should finish grill, write the spec and implementation plan, write a concise goal prompt for itself, start the goal with the available goal tool, and continue the Agent-Owned Internal Pipeline until a blocker or manual acceptance handoff. If goal tooling is unavailable, the agent should continue the same pipeline without goal mode rather than handing the task back to the owner.
+When goal-mode is explicitly requested, the agent should finish grill, create the goal with the available goal tool, write the spec and implementation plan, and continue the Agent-Owned Internal Pipeline until a blocker or manual acceptance handoff. If goal tooling is unavailable, the agent should stop and report the blocker instead of silently continuing without the explicit goal-mode boundary.
 
 ## Included Skills
 
