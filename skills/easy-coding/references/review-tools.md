@@ -9,14 +9,14 @@ Review-fix has two mandatory roles:
 1. An independent subagent reviewer.
 2. The main agent as integrator, triager, fixer, verifier, and recorder.
 
-The default reviewer is a native subagent reviewing the current pre-commit diff. External tools are optional supporting evidence. They do not replace the subagent reviewer.
+The default review path is the `review-fix` skill: a native subagent reviews the current pre-checkpoint diff or candidate range using the vendored code-review-skill guidance, then writes or updates `REVIEW.md`. External tools are optional supporting evidence. They do not replace the subagent reviewer.
 
 Non-negotiables:
 
-- Before manual acceptance, spawn/request a subagent review of the actual diff.
+- Before manual acceptance, run `review-fix` once for the completed implementation. Do not review after every subtask by default.
 - Review happens before the checkpoint commit. After fixing findings and rerunning affected checks, create the checkpoint commit.
 - Give the subagent the accepted scope, changed files, branch/base, relevant docs, verification already run, and project completion rules.
-- Ask the subagent for its own reviewed judgment, ordered by severity, with file/line references where possible.
+- Ask the subagent for its own reviewed judgment, grouped into `must-fix`, `follow-up`, and `non-issue`, with file/line references where possible.
 - The main agent must inspect the subagent findings, classify them, fix must-fix items, rerun affected checks, and record the review result.
 - If subagent tooling is unavailable, stop at a blocker. Do not present the work as ready for manual acceptance with main-agent-only review.
 - Never claim a subagent or OpenCodeReview review ran unless it actually ran and its output was inspected.
@@ -46,6 +46,8 @@ Minimum prompt shape:
 ```text
 Review this diff for Easy Coding review-fix. Do not edit files.
 
+Load and follow the `review-fix` skill. Use the vendored code-review-skill references relevant to this stack.
+
 Scope: ...
 Repo/path: ...
 Review target: current pre-checkpoint diff / commit <sha> / range <base>..<head>
@@ -54,10 +56,23 @@ Verification already run: ...
 Project completion rules: ...
 
 Review staged, unstaged, and untracked in-scope files. Focus on correctness, false completion, accidental UI/copy changes, security/privacy, migration/data-loss/idempotency, stale docs, and missing verification.
-Return findings first, ordered by severity, with file/line references where possible. If there are no issues, say so clearly and note residual risk.
+Return concise Markdown suitable for `docs/batch/.../REVIEW.md`. Group findings as `must-fix`, `follow-up`, and `non-issue`. If there are no issues, say so clearly and note residual risk.
 ```
 
 The required output is the subagent's reviewed judgment. Raw external-tool output alone is not enough.
+
+## Review Document
+
+Write or update the active batch review file, usually `docs/batch/<batch-name>/REVIEW.md`.
+
+Record:
+
+- review target and reviewer mode
+- reviewed scope
+- summary decision
+- findings grouped as `must-fix`, `follow-up`, and `non-issue`
+- verification already run and verification needed after fixes
+- final main-agent triage/fix result
 
 ## Optional OpenCodeReview Support
 

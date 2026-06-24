@@ -8,7 +8,7 @@
 
 - Default installation includes only the easy-coding core skills in `skills/`.
 - Matt Pocock skills are external prerequisites installed from `mattpocock/skills`.
-- Subagent review is the mandatory Easy Coding review-fix reviewer role. OpenCodeReview is optional external support. Do not vendor external review tools into this repository.
+- Subagent review is the mandatory Easy Coding review-fix reviewer role. The `review-fix` skill vendors `awesome-skills/code-review-skill` as Markdown reference only. OpenCodeReview is optional external support.
 - Keep the Matt Pocock snapshot under `vendor/` as non-installed attribution/reference material.
 - Do not duplicate external skill names in the default install set.
 - Keep attribution explicit in `ATTRIBUTION.md`.

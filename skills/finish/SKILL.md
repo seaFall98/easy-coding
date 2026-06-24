@@ -24,7 +24,7 @@ If there is uncommitted in-scope accepted work, stop and report that finish cann
 
 If any other prerequisite fails, report what is missing and stop.
 
-Do not start a new review, run regression tests, or make code fixes in finish. Manual acceptance already validated the checkpoint. If finish reveals any need for code changes, stop and ask the owner how to proceed.
+Do not start a new review or run general regression tests in finish. Manual acceptance already validated the checkpoint. If merging the latest base requires conflict resolution or code changes, leave finish mode: resolve only with owner approval, rerun affected checks, and get manual acceptance again before PR.
 
 ## Workflow
 
@@ -57,15 +57,22 @@ Otherwise, look for agent instructions, docs indexes, roadmaps, status files, AD
 
 If docs live inside the same source repo and require a commit, a docs-only finish commit is allowed when it records acceptance or PR state. Do not include code changes in that commit.
 
-### 3. Optional remote refresh
+### 3. Integrate latest base
 
-Fetch remote refs only to avoid duplicate PRs and stale branch assumptions:
+Fetch remote refs and merge the latest base into the feature branch before PR:
 
 ```bash
 git fetch origin --prune
+git merge --no-edit origin/<base-branch>
 ```
 
-Do not switch to the base branch, pull the base branch, merge base into the feature branch, rebase, or resolve conflicts during finish. Let the PR surface whether the branch is mergeable.
+Use merge by default. Do not rebase or force-push unless the owner explicitly asks.
+
+If there are conflicts:
+
+- Stop and report the conflict.
+- Resolve only after the owner approves leaving finish mode.
+- After conflict resolution, rerun affected checks and ask for manual acceptance again before pushing or opening the PR.
 
 ### 4. Final branch check
 
@@ -137,8 +144,8 @@ Ask before deleting the remote branch.
 | Branch already pushed | Continue to PR creation |
 | PR already exists | Report existing URL |
 | `gh` unauthenticated | Ask owner to run `gh auth login` |
-| Base branch moved | Still create/report PR unless the owner asked to pre-integrate; let PR show mergeability |
-| Feature conflicts with base | Report the PR conflict state; do not resolve in finish mode |
+| Base branch moved | Merge `origin/<base>` into the feature branch before PR |
+| Feature conflicts with base | Stop, report the conflict, and only resolve after owner approves returning to implementation |
 | Push rejected because remote branch advanced | Fetch, inspect divergence, and do not force-push by default |
 | Linear history required | Ask before rebase; never force-push without explicit approval |
 | No docs system | Skip docs sync |

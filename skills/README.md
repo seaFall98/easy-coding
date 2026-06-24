@@ -7,6 +7,7 @@ Default installation includes only these easy-coding skills:
 - `to-roadmap`: creates or migrates `easy-roadmap.md` after owner grill
 - `write-spec`: turns grill results into `SPEC.md`
 - `goal-plan`: turns accepted specs into goal-mode implementation plans
+- `review-fix`: runs the mandatory pre-acceptance subagent review and records `REVIEW.md`
 - `doc-sync`: keeps roadmap/current-work/batch docs synchronized
 - `finish`: closes a feature branch and runs finish-time docs sync
 

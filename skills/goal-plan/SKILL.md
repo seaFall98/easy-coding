@@ -112,8 +112,8 @@ A good phase usually has:
 - clear dependency boundaries
 - one owner for integration
 - local verification that can run immediately
-- a short phase review before moving on
-- an explicit review-fix item before checkpoint or acceptance
+- a short phase self-check before moving on
+- one final review-fix item before manual acceptance
 
 Typical order:
 1. foundations and contracts
@@ -160,14 +160,14 @@ For complex specs, include a pre-implementation review after spec/plan and befor
 - find missing tests or acceptance checks
 - find places where official or open-source solutions should be used
 
-After each implementation phase, include a lighter review:
+After each implementation phase, include a lightweight self-check, not a formal review-fix:
 - compare delivered behavior to the spec
 - run targeted checks
 - inspect the diff for scope creep
 - decide whether to continue, patch, or ask the owner
 - record any phase self-checks separately from review-fix
 
-The review-fix item before checkpoint or acceptance must be the Easy Coding mandatory independent subagent review. Main-agent self-review, project/local code-review skills, and external/plugin reviewers can support the phase review, but they do not satisfy final review-fix without the subagent review.
+The final review-fix item before manual acceptance must use the Easy Coding `review-fix` skill: an independent native subagent reviews the completed implementation and writes/updates `REVIEW.md`. Main-agent self-checks and external/plugin reviewers can support the work, but they do not satisfy final review-fix without the subagent review document.
 
 ## Verification Matrix
 
@@ -208,7 +208,7 @@ Do not plan to bypass these gates.
 
 For staged goal-mode work, recommend commits at stable checkpoints:
 - after a phase passes verification
-- after a review-fix batch passes tests
+- after final review-fix passes and affected checks rerun
 - before a risky migration or large refactor if useful
 
 Include resume notes that stay short:

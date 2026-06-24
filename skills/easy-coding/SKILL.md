@@ -14,8 +14,8 @@ Easy Coding is a lightweight delivery router. It chooses the smallest workflow t
 - Use only three normal owner-facing gates: grill, manual acceptance, and finish confirmation.
 - After grill resolves the product decisions, spec, plan, implementation, verification, review-fix, and docs/status updates are agent-owned.
 - At every internal stage boundary, run a pipeline checkpoint: name the stage just completed, consult the Agent-Owned Pipeline or live plan for the next required step, update visible plan/status when available, then continue. Do not rely on memory of the pipeline order.
-- Review-fix is mandatory, not optional. It must be a visible plan/status item before manual acceptance, and the handoff must state how review was performed. Do not wait for the owner to ask "did you review?" before inspecting the diff, fixing clear issues, and rerunning affected checks.
-- Review-fix must include an independent subagent review before manual acceptance. The default reviewer is a native subagent reviewing the current pre-commit diff; optional external tools such as OpenCodeReview are supporting evidence only. If subagent tooling is unavailable, stop at a blocker instead of downgrading to main-agent-only review.
+- Review-fix is mandatory once after implementation is complete and before manual acceptance. It must be a visible plan/status item, must use `review-fix`, and must write/update `REVIEW.md`. Do not run review after every subtask by default.
+- Review-fix must include an independent native subagent review before manual acceptance. Optional external tools such as OpenCodeReview are supporting evidence only. If subagent tooling is unavailable, stop at a blocker instead of downgrading to main-agent-only review.
 - After review-fix passes and affected checks are rerun, create a local checkpoint commit for the accepted candidate when repository rules allow commits. If commits are not allowed, explicitly say why and provide the exact uncommitted state. Do not leave a large completed batch only in the working tree before finish.
 - Internal checkpoints are resume markers, not stopping points. Do not final-answer after only drafting a spec, writing a plan, passing a build, updating docs, or finishing one phase.
 - Keep `Resolved Decisions` or the project’s live control document current when meaningful decisions, phase status, verification results, or stop conditions change.
@@ -42,6 +42,7 @@ Default down, not up. Escalate when a wrong assumption would be expensive, when 
 - Feature or bug implementation with behavior risk: use `tdd` where tests can pin the contract.
 - Non-trivial bug, regression, failed acceptance, or unknown failure mode: use `diagnosing-bugs`.
 - UI quality work: use the project’s frontend/design skill before changing visuals.
+- Implementation complete and ready for pre-acceptance review: use `review-fix`.
 - Completion after owner acceptance: use `doc-sync`, then `finish`.
 
 When a supporting skill fits, use it; do not reimplement it inside Easy Coding.
@@ -55,7 +56,7 @@ After grill is complete, proceed autonomously unless a human gate appears:
 3. If explicit goal-mode execution was requested, create a concise goal prompt covering the whole pipeline: objective, branch, spec path, plan path, current phase, stop conditions, verification expectations, and manual acceptance boundary.
 4. Implement in the active feature branch, respecting project branch/push/PR permissions.
 5. Verify real behavior, persistence, reload/reopen behavior, and integration paths relevant to the tier.
-6. Load `references/checklists.md`, run the required independent subagent review of the current pre-commit diff, optionally add OpenCodeReview evidence, triage findings, and fix clear issues before acceptance handoff.
+6. Use `review-fix`: run the required independent subagent review of the current pre-checkpoint diff or candidate range, write/update `REVIEW.md`, triage findings, and fix clear issues before acceptance handoff.
 7. Rerun the checks affected by review fixes. Old verification is not proof after review-fix changes.
 8. Commit the reviewed acceptance candidate locally when commits are permitted, so finish/PR work has a stable, searchable checkpoint. Keep docs in the same commit when they describe the same completed work unless the project separates source and docs.
 9. Hand off for manual acceptance with only delta information: what changed, what passed, what was not run, commit/checkpoint state, how to accept, and remaining risk.
@@ -90,7 +91,7 @@ If any box is false, keep working. Do not present the work as ready for acceptan
 Keep this file short. Load extra references only when their context pointer fires:
 
 - `references/checklists.md`: load before review-fix and acceptance handoff; also load for `heavy`, stale-roadmap work, security/data consistency risk, uncertain verification strategy, UI quality acceptance, local-stack/Docker handoff, or compact handoff formatting.
-- `references/review-tools.md`: load when preparing the required subagent review, choosing optional OpenCodeReview support, or recording a review blocker.
+- `references/review-tools.md`: load when preparing `review-fix`, choosing optional OpenCodeReview support, or recording a review blocker.
 - `references/skill-map.md`: load when choosing among Easy Coding supporting skills.
 - `references/publishing.md`: load only when publishing, installing, or syncing the skill itself.
 
@@ -101,8 +102,8 @@ When the owner confirms finish:
 - Finish is administrative closeout for an already accepted checkpoint. It is not another implementation, review, or verification phase.
 - Sync current docs and roadmap status without duplicating content already available in those docs.
 - Use the repository's finish workflow for branch, PR, merge, cleanup, and final state.
-- Do not run new review, regression tests, or extra fixes during finish. Manual acceptance already validated the checkpoint.
-- If finish discovers a dirty worktree, conflict, unexpected branch divergence, or any need for code changes, stop and report the blocker instead of continuing the pipeline.
+- Do not run new review or general regression tests during finish. Manual acceptance already validated the checkpoint.
+- During finish, integrate the latest base branch locally before PR. If that merge is clean, continue. If conflicts require code resolution, resolve only when the owner approves returning to implementation, then rerun affected checks and get manual acceptance again before PR.
 - Do not push, create a PR, merge, deploy, or delete important content unless the project/user permission boundary allows it.
 
 ## Output Style

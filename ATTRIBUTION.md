@@ -37,6 +37,15 @@ OpenCodeReview is an optional external review-fix support tool. It is installed 
 - Repository: https://github.com/alibaba/open-code-review
 - License: Apache-2.0
 
+## Code Review Skill
+
+`review-fix` vendors a Markdown-only reference snapshot of `awesome-skills/code-review-skill` under `skills/review-fix/references/code-review-skill/`. It is used as guidance for the native subagent reviewer and does not install a separate plugin or CLI.
+
+- Repository: https://github.com/awesome-skills/code-review-skill
+- Snapshot commit: `17267ff26b95dcea28c3dae76f9931cdf9604520`
+- License: MIT
+- Copyright: Copyright (c) 2025 tt-a1i
+
 ## Easy Coding Core Skills
 
 - `easy-coding`
@@ -44,5 +53,6 @@ OpenCodeReview is an optional external review-fix support tool. It is installed 
 - `to-roadmap`
 - `write-spec`
 - `goal-plan`
+- `review-fix`
 - `doc-sync`
 - `finish`

@@ -6,9 +6,9 @@ It provides one entry skill, `$easy-coding`, that routes a complex web/full-stac
 
 ## Positioning
 
-This project blends Matt Pocock skills, required subagent review, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
+This project blends Matt Pocock skills, required subagent review, vendored code-review guidance, and practical AI coding workflow patterns from real feature development. It is not a fork of those projects and does not promise upstream sync.
 
-Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. External review tools such as OpenCodeReview are optional and configured separately.
+Default installation includes only easy-coding core skills. A local Matt Pocock skills snapshot is kept under `vendor/` for attribution and reference, but it is not installed by default to avoid duplicate skill names. The `review-fix` skill vendors `awesome-skills/code-review-skill` as Markdown reference only. External review tools such as OpenCodeReview are optional and configured separately.
 
 ## Install
 
@@ -38,7 +38,7 @@ ocr config model
 ocr llm test
 ```
 
-Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 7 core easy-coding skills.
+Do not install this repository with `--full-depth` unless you intentionally want to inspect or install the vendor snapshot. Default installation detects only the 8 core easy-coding skills.
 
 For local testing from this checkout:
 
@@ -89,13 +89,13 @@ Internal checkpoints are not owner gates. After grill, the agent should not stop
 
 ## Review-Fix
 
-Review-fix is mandatory before manual acceptance. Easy Coding requires an independent subagent review of the actual diff. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
+Review-fix is mandatory once before manual acceptance. Easy Coding requires an independent subagent review of the completed implementation using `$review-fix`, and the result must be recorded in `docs/batch/.../REVIEW.md`. If subagent tooling is unavailable, the agent must stop at a blocker instead of handing off for acceptance.
 
-Review-fix normally reviews the current uncommitted/staged working diff before the checkpoint commit. That does not conflict with requiring a commit before manual acceptance: the order is review, fix, rerun affected checks, then create the local checkpoint commit. OpenCodeReview is optional supporting evidence, but it does not replace the required subagent reviewer.
+Review-fix normally reviews the current uncommitted/staged working diff before the checkpoint commit. That does not conflict with requiring a commit before manual acceptance: the order is review document, fix, rerun affected checks, then create the local checkpoint commit. OpenCodeReview is optional supporting evidence, but it does not replace the required subagent reviewer.
 
 ## Finish
 
-Finish is intentionally lightweight. After manual acceptance, the agent should only sync docs/status, push the accepted branch, and create or report the PR. It must not start another review, rerun regressions, or make extra fixes during finish.
+Finish is intentionally lightweight. After manual acceptance, the agent should sync docs/status, merge the latest base branch locally, push the accepted branch, and create or report the PR. It must not start another review or rerun general regressions during finish; conflict resolution means leaving finish mode and getting acceptance again.
 
 ## Goal Mode
 
